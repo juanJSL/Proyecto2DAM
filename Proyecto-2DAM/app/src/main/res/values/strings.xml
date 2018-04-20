@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ProyectoDAM</string>
+
+    <!--PANTALLA LOGIN-->
+    <string name="usuario_et_wlog">Usuario</string>
+    <string name="pwd_et_wlog">Contraseña</string>
+    <string name="entrar_bt_wlog">Entrar</string>
+    <string name="crear_cuenta_tv_wlog">Crear una nueva cuenta</string>
+
+    <!--PANTALLA CREAR CUENTA-->
+    <string name="nombre_et_wcreacu">Nombre</string>
+    <string name="nick_et_wcreacu">Nick</string>
+    <string name="pwd_et_wcreacu">Contraseña</string>
+    <string name="repetir_pwd_et_wcreacu">Repetir contraseña</string>
+    <string name="fnac_et_wcreacu">Fecha de nacimiento</string>
+    <string name="ciudad_et_wcreacu">Ciudad</string>
+    <string name="crear_cuenta_bt_wcreacu">Crear cuenta</string>
+
+    <!--GENERALES-->
+    <string name="aceptar">Aceptar</string>
+    <string name="volver">Volver</string>
+    <string name="cancelar">Cancelar</string>
+
+
+</resources>
