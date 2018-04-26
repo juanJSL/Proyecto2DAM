@@ -25,6 +25,13 @@ public class Jugador {
         this.fotoPerfil = fotoPerfil;
     }
 
+    public Jugador(String nombre, String nick, String rol) {
+        this.nombre = nombre;
+        this.nick = nick;
+        this.rol = rol;
+    }
+
+
     public int getIdJugador() {
         return idJugador;
     }
