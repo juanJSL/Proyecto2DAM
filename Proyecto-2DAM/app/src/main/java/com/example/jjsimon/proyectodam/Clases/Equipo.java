@@ -1,7 +1,7 @@
 package com.example.jjsimon.proyectodam.Clases;
 
 public class Equipo {
-    private int idEquipo;
+    private int id_equipo;
     private String nombre;
     private String ubicacion;
     private String descripcion;
@@ -13,19 +13,19 @@ public class Equipo {
     }
 
     public Equipo(int idEquipo, String nombre, String ubicacion, String descripcion, String escudo) {
-        this.idEquipo = idEquipo;
+        this.id_equipo = idEquipo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.escudo = escudo;
     }
 
-    public int getIdEquipo() {
-        return idEquipo;
+    public int getId_equipo() {
+        return id_equipo;
     }
 
-    public void setIdEquipo(int idEquipo) {
-        this.idEquipo = idEquipo;
+    public void setId_equipo(int id_equipo) {
+        this.id_equipo = id_equipo;
     }
 
     public String getNombre() {

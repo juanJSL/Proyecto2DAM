@@ -2,21 +2,19 @@ package com.example.jjsimon.proyectodam.Clases;
 
 public class ALD {
     private int idAld;
-    private String marca;
     private String modelo;
     private String rol;
-    private double fos;
+    private double fps;
     private Jugador jugadorPropietario;
 
     public ALD() {
     }
 
-    public ALD(int idAld, String marca, String modelo, String rol, double fos) {
+    public ALD(int idAld, String modelo, String rol, double fps) {
         this.idAld = idAld;
-        this.marca = marca;
         this.modelo = modelo;
         this.rol = rol;
-        this.fos = fos;
+        this.fps = fps;
     }
 
     public int getIdAld() {
@@ -25,14 +23,6 @@ public class ALD {
 
     public void setIdAld(int idAld) {
         this.idAld = idAld;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
     }
 
     public String getModelo() {
@@ -51,12 +41,12 @@ public class ALD {
         this.rol = rol;
     }
 
-    public double getFos() {
-        return fos;
+    public double getFps() {
+        return fps;
     }
 
-    public void setFos(double fos) {
-        this.fos = fos;
+    public void setFps(double fps) {
+        this.fps = fps;
     }
 
     public Jugador getJugadorPropietario() {

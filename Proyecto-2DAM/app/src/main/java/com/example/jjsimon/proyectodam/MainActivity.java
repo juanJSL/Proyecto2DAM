@@ -7,13 +7,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import com.example.jjsimon.proyectodam.Adaptadores.ViewPagerAdapter;
+import com.example.jjsimon.proyectodam.Clases.Equipo2;
 import com.example.jjsimon.proyectodam.Fragment.Chat;
 import com.example.jjsimon.proyectodam.Fragment.Equipo;
 import com.example.jjsimon.proyectodam.Fragment.Mapa;
 import com.example.jjsimon.proyectodam.Fragment.Perfil;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Perfil");
         tabLayout.getTabAt(2).setText("Equipo");
         tabLayout.getTabAt(3).setText("Chat");
+
+
+
+        pruebaFireBase();
     }
 
 
@@ -65,6 +76,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         viewPager.setAdapter(adapter);
+
+    }
+
+
+    /**
+     * Ejemplo de como leer de la base de datos
+     */
+    public void pruebaFireBase (){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference tutorialRef = database.getReference("equipos");
+        tutorialRef.child("equipo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Equipo2 equipo2 = dataSnapshot.getValue(Equipo2.class);
+                Log.w("EQUIPO:       ", equipo2.getNombre()+"");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 }
