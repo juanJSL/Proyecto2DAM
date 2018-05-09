@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Jugador {
     private int idJugador;
-    private String nombre;
+    private String mail;
     private String nick;
     private String rol;
     private Date fnac;
@@ -15,9 +15,9 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(int idJugador, String nombre, String nick, String rol, Date fnac, String ciudad, String fotoPerfil) {
+    public Jugador(int idJugador, String mail, String nick, String rol, Date fnac, String ciudad, String fotoPerfil) {
         this.idJugador = idJugador;
-        this.nombre = nombre;
+        this.mail = mail;
         this.nick = nick;
         this.rol = rol;
         this.fnac = fnac;
@@ -25,8 +25,8 @@ public class Jugador {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public Jugador(String nombre, String nick, String rol) {
-        this.nombre = nombre;
+    public Jugador(String mail, String nick, String rol) {
+        this.mail = mail;
         this.nick = nick;
         this.rol = rol;
     }
@@ -40,12 +40,12 @@ public class Jugador {
         this.idJugador = idJugador;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getMail() {
+        return mail;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getNick() {

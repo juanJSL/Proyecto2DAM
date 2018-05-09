@@ -15,16 +15,16 @@
       },
       "oauth_client": [
         {
+          "client_id": "1062097950130-2ua15ftermb6fblga3br2u3rfbvjhmlk.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "1062097950130-c55f0i1863sk20b0n2fkgovrujg2gdvs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.jjsimon.proyectodam",
             "certificate_hash": "e347d255b1fb8dc8faeb0b579854d00ddf49844c"
           }
-        },
-        {
-          "client_id": "1062097950130-2ua15ftermb6fblga3br2u3rfbvjhmlk.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [

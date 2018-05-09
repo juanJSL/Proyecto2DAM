@@ -67,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void bindJugador(Jugador jugador){
-            nombreJugador.setText(jugador.getNombre());
+            nombreJugador.setText(jugador.getMail());
             nickJugador.setText(jugador.getNick());
             rol.setText(jugador.getRol());
             //Investigar de como coger la imagen

@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PantallaCrearCuenta" />
+        <activity android:name=".PantallaLogin" />
 
 
        <!--<meta-data android:name="com.google.android.gms.version"

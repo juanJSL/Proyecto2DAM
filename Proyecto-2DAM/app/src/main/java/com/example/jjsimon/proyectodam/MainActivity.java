@@ -2,6 +2,7 @@ package com.example.jjsimon.proyectodam;
 
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Abro la pantalla de crear cuenta
+        startActivity(new Intent(this, PantallaCrearCuenta.class));
+
+        //Abro la pantalla de login
+        //startActivity(new Intent(this, PantallaLogin.class));
+
+
+
+
         //Inicializo el ViewPager
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         //Llamo al metodo que se encarga de cargar el ViewPager
@@ -47,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        pruebaFireBase();
+       pruebaFireBase();
     }
 
 

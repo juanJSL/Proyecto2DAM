@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">ProyectoDAM</string>
 
-    <!--PANTALLA LOGIN-->
-    <string name="usuario_et_wlog">Usuario</string>
+    <!-- PANTALLA LOGIN -->
+    <string name="mail_et_wlog">E-mail</string>
     <string name="pwd_et_wlog">Contraseña</string>
     <string name="entrar_bt_wlog">Entrar</string>
     <string name="crear_cuenta_tv_wlog">Crear una nueva cuenta</string>
 
-    <!--PANTALLA CREAR CUENTA-->
-    <string name="nombre_et_wcreacu">Nombre</string>
+    <!-- PANTALLA CREAR CUENTA -->
+    <string name="mail_et_wcreacu">E-mail</string>
     <string name="nick_et_wcreacu">Nick</string>
     <string name="pwd_et_wcreacu">Contraseña</string>
     <string name="repetir_pwd_et_wcreacu">Repetir contraseña</string>
@@ -16,14 +16,25 @@
     <string name="ciudad_et_wcreacu">Ciudad</string>
     <string name="crear_cuenta_bt_wcreacu">Crear cuenta</string>
 
-    <!--GENERALES-->
+    <!-- GENERALES -->
     <string name="aceptar">Aceptar</string>
     <string name="volver">Volver</string>
     <string name="cancelar">Cancelar</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove orange this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <!-- TEXTO PARA TOAST -->
+        <!-- ERRORES -->
+    <string name="error_faltan_campos">Antes debes rellenar todos los campos</string>
+    <string name="error_pwd_no_match">Las contraseñas no coinciden</string>
+    <string name="error_mail_no_valido">El email introducido no es valido</string>
+    <string name="error_registro_no_completado">Error al completar el registrelo intentelo mas tarde</string>
+    <string name="error_pwd_corta">La contraseña debe tener al menos 4 caracteres</string>
+        <!-- OK -->
+    <string name="ok_registro_completado">Registro Completado</string>
 
 
 </resources>
