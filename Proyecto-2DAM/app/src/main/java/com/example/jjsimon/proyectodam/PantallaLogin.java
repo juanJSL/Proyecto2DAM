@@ -77,7 +77,10 @@ public class PantallaLogin extends AppCompatActivity {
      *
      */
     public void abrirCrearCuenta(){
-        startActivity(new Intent(this, PantallaCrearCuenta.class));
+        Intent intent = new Intent(this, PantallaCrearCuenta.class);
+        startActivityForResult(intent, 0);
+
+        
     }
 
     /**
@@ -93,6 +96,7 @@ public class PantallaLogin extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(PantallaLogin.this, "Sesion iniciada", Toast.LENGTH_LONG).show();
+                    finish();
                     Log.w("SESION", "Sesion iniciada");
                 }else {
                     Toast.makeText(PantallaLogin.this, "No se ha podido iniciar sesion", Toast.LENGTH_LONG).show();

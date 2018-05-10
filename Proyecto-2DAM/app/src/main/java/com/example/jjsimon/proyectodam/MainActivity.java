@@ -12,11 +12,13 @@ import android.util.Log;
 
 
 import com.example.jjsimon.proyectodam.Adaptadores.ViewPagerAdapter;
+import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Equipo2;
 import com.example.jjsimon.proyectodam.Fragment.Chat;
-import com.example.jjsimon.proyectodam.Fragment.Equipo;
+import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
 import com.example.jjsimon.proyectodam.Fragment.Mapa;
 import com.example.jjsimon.proyectodam.Fragment.Perfil;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Abro la pantalla de crear cuenta
-        startActivity(new Intent(this, PantallaCrearCuenta.class));
+        //startActivity(new Intent(this, PantallaCrearCuenta.class));
 
         //Abro la pantalla de login
-        //startActivity(new Intent(this, PantallaLogin.class));
+        startActivity(new Intent(this, PantallaLogin.class));
 
 
 
@@ -58,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       pruebaFireBase();
+       //pruebaFireBase();
+       // pruebaGuardarFirebase();
+        Log.w("CONEXION", ""+FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
 
 
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         //Creo los fragment
         Mapa mapa = new Mapa();
         Perfil perfil = new Perfil();
-        Equipo equipo = new Equipo();
+        PestanaEquipo pestanaEquipo = new PestanaEquipo();
         Chat chat = new Chat();
 
         //adapter.addFragment(mapa);
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         //adapter.addFragment(equipo);
         //adapter.addFragment(chat);
 
-        Fragment[] array = {mapa, perfil, equipo, chat};
+        Fragment[] array = {mapa, perfil, pestanaEquipo, chat};
 
         //Añado los fragment
         for (Fragment f:array){
@@ -112,4 +116,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void pruebaGuardarFirebase(){
+        Log.w("FIREBASE", "Entra");
+        FirebaseDatabase firebaseDatabase;
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        /*int id = 2;
+        String nombre = "SEAL";
+        String ubicacion = "Cuevas";
+        String desc = "Descripcion";
+        String escudo = "Escudo";*/
+
+
+        Equipo e = new Equipo(2, "SEAL", "Cuevas", "Equipo de cuevas", "Escudo SEAL");
+
+        databaseReference.child("equipos").child(e.getId_equipo()+"").setValue(e);
+        //mDatabase.child("users").child(userId).setValue(user);
+
+        Log.w("FIREBASE", "Fin");
+    }
+
 }

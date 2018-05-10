@@ -3,25 +3,21 @@ package com.example.jjsimon.proyectodam.Clases;
 import java.util.Date;
 
 public class Jugador {
-    private int idJugador;
+    private String idJugador;
     private String mail;
     private String nick;
     private String rol;
-    private Date fnac;
-    private String ciudad;
     private String fotoPerfil;
     private Equipo equipo;
 
     public Jugador() {
     }
 
-    public Jugador(int idJugador, String mail, String nick, String rol, Date fnac, String ciudad, String fotoPerfil) {
+    public Jugador(String idJugador, String mail, String nick, String rol, String fotoPerfil) {
         this.idJugador = idJugador;
         this.mail = mail;
         this.nick = nick;
         this.rol = rol;
-        this.fnac = fnac;
-        this.ciudad = ciudad;
         this.fotoPerfil = fotoPerfil;
     }
 
@@ -32,11 +28,11 @@ public class Jugador {
     }
 
 
-    public int getIdJugador() {
+    public String getIdJugador() {
         return idJugador;
     }
 
-    public void setIdJugador(int idJugador) {
+    public void setIdJugador(String idJugador) {
         this.idJugador = idJugador;
     }
 
@@ -62,22 +58,6 @@ public class Jugador {
 
     public void setRol(String rol) {
         this.rol = rol;
-    }
-
-    public Date getFnac() {
-        return fnac;
-    }
-
-    public void setFnac(Date fnac) {
-        this.fnac = fnac;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
     }
 
     public String getFotoPerfil() {

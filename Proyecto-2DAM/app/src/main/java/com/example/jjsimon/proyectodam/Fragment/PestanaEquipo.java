@@ -18,7 +18,7 @@ import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class Equipo extends Fragment {
+public class PestanaEquipo extends Fragment {
 
 
     private ArrayList<Jugador> jugadorList = new ArrayList<>();

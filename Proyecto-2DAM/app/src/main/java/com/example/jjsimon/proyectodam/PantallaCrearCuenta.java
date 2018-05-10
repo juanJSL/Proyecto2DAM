@@ -1,18 +1,25 @@
 package com.example.jjsimon.proyectodam;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.jjsimon.proyectodam.Clases.Jugador;
+import com.google.android.gms.common.data.TextFilterable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Pattern;
 
@@ -22,6 +29,7 @@ public class PantallaCrearCuenta extends AppCompatActivity {
     EditText mailET;
     EditText nickET;
     Button btCrearCuenta;
+    Spinner listaRoles;
 
     //Componentes de Firebase
     FirebaseAuth firebaseAuth;
@@ -39,6 +47,11 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         btCrearCuenta = (Button) findViewById(R.id.crearCuenta_bt_wcreacu);
         mailET = (EditText) findViewById(R.id.mail_et_wcreacu);
         nickET = (EditText) findViewById(R.id.nick_et_wcreacu);
+        listaRoles = (Spinner) findViewById(R.id.spinner_roles);
+
+        //Cargo la lista con los roles
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.roles_array,android.R.layout.simple_spinner_item);
+        listaRoles.setAdapter(adapter);
 
         //Tambien los de Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -123,9 +136,8 @@ public class PantallaCrearCuenta extends AppCompatActivity {
      */
     public void iniciarRegistro() {
         Log.w("INICIAR REGISTRO", "LLAMADO");
-        String nombreStr = nickET.getText() + "";
-        String correoStr = mailET.getText() + "";
-        String pwdStr = pwdET.getText() + "";
+        final String correoStr = mailET.getText() + "";
+        final String pwdStr = pwdET.getText() + "";
 
         firebaseAuth.createUserWithEmailAndPassword(correoStr, pwdStr)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -133,11 +145,39 @@ public class PantallaCrearCuenta extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(PantallaCrearCuenta.this, R.string.ok_registro_completado, Toast.LENGTH_LONG).show();
-                            finish();
+
+                            //Guardo el usuario en la base de datos
+                            guardarUser(firebaseAuth.getCurrentUser().getUid(), correoStr);
+
+                            //Antes de cerrar la actividad inicio sesion con el usuario recien creado
+                            firebaseAuth.signInWithEmailAndPassword(correoStr, pwdStr);
+                            Log.w("CONEXION", "antessss       "+FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                            startActivity(new Intent(PantallaCrearCuenta.this, MainActivity.class));
+                            //finish();
                         }else {
                             Toast.makeText(PantallaCrearCuenta.this, R.string.error_registro_no_completado, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }//FIN INICIAR REGISTRO
+
+
+    /**
+     * Este metodo se ejecuta cuando un usuario se registra, permite guardar los datos del uusario en la base de datos
+     * @param idUser es el id que se genera automaticamente al registrar un usuario
+     */
+    public void guardarUser(String idUser, String mail){
+        String nickStr = nickET.getText() + "";
+        //Creo un objeto con los datos introducidos por el usuario
+        Jugador jugador = new Jugador(idUser, mail, nickStr, String.valueOf(listaRoles.getSelectedItem()),"Foto");
+
+        //Creo una referencia a la base de datos
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        //Guardo el uusario en la base de datos
+        databaseReference.child("jugadores").child(jugador.getIdJugador()).setValue(jugador);
+    }//FIN GUARDAR USER
+
+
+
 }
