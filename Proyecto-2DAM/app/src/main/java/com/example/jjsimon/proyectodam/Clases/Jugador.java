@@ -8,7 +8,7 @@ public class Jugador {
     private String nick;
     private String rol;
     private String fotoPerfil;
-    private Equipo equipo;
+    private String idEquipo;
 
     public Jugador() {
     }
@@ -68,11 +68,11 @@ public class Jugador {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public Equipo getEquipo() {
-        return equipo;
+    public String getEquipo() {
+        return idEquipo;
     }
 
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
+    public void setEquipo(String equipo) {
+        this.idEquipo = equipo;
     }
 }
