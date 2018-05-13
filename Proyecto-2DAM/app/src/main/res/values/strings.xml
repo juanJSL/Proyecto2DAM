@@ -20,20 +20,22 @@
     <string name="aceptar">Aceptar</string>
     <string name="volver">Volver</string>
     <string name="cancelar">Cancelar</string>
+    <string name="sin_equipo">Aun no perteneces a ningun equipo</string>
+
+
 
     <!-- TODO: Remove orange this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
 
 
     <!-- TEXTO PARA TOAST -->
-        <!-- ERRORES -->
+    <!-- ERRORES -->
     <string name="error_faltan_campos">Antes debes rellenar todos los campos</string>
     <string name="error_pwd_no_match">Las contraseñas no coinciden</string>
     <string name="error_mail_no_valido">El email introducido no es valido</string>
     <string name="error_registro_no_completado">Error al completar el registrelo intentelo mas tarde</string>
     <string name="error_pwd_corta">La contraseña debe tener al menos 4 caracteres</string>
-        <!-- OK -->
+    <!-- OK -->
     <string name="ok_registro_completado">Registro Completado</string>
 
 

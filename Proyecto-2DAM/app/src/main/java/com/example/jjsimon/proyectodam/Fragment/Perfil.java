@@ -107,6 +107,7 @@ public class Perfil extends Fragment {
                         equipoTV.setText(nombreEquipo);
                     else
                         equipoTV.setText("Libre");
+                    Log.w("EQUIPO", ""+ jugador.getEquipo());
                 }
 
                 @Override
