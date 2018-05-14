@@ -37,12 +37,12 @@ public class PantallaLogin extends AppCompatActivity {
         setContentView(R.layout.activity_pantalla_login);
 
         //Compruebo si el usuario esta logueado si no esta logueado abro la pantalla de login
-   /*if(isLogueado()){
+        if(isLogueado()){
            Log.w("PREFERENCIAS", "Abro pantalla login");
           startActivity(new Intent(this, MainActivity.class));
         }else
            Log.w("PREFERENCIAS", "El usuario no esta logueado");
-   */
+
         //Inicializo los componentes
         mailET = (EditText) findViewById(R.id.mail_et_wlog);
         pwdET = (EditText) findViewById(R.id.pwd_et_wlog);

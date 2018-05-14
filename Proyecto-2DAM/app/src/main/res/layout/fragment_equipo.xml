@@ -43,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:text="Teral Milsim"
         app:layout_constraintStart_toEndOf="@+id/wequipo_nombretitle"
         tools:layout_editor_absoluteY="16dp" />
 

@@ -23,7 +23,6 @@
     <string name="sin_equipo">Aun no perteneces a ningun equipo</string>
 
 
-
     <!-- TODO: Remove orange this placeholder text -->
     <string name="title_activity_maps">Map</string>
 
@@ -37,6 +36,16 @@
     <string name="error_pwd_corta">La contraseña debe tener al menos 4 caracteres</string>
     <!-- OK -->
     <string name="ok_registro_completado">Registro Completado</string>
+
+
+    <!--FRAGMENT PESTAÑA SIN EQUIPO-->
+    <string name="crear_equipo">Crear un equipo ahora</string>
+
+    <!--AVTIVIDAD CREAR EQUIPO-->
+    <string name="nombre_equipo">Nombre del equipo</string>
+    <string name="descripcion">Algo sobre vosotros....</string>
+    <string name="ubicacion_bt">¿Donde se encuentra tu equipo?</string>
+    <string name="title_activity_pantalla_ubicacion_equipo">Map</string>
 
 
 </resources>

@@ -107,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
     public void pruebaFireBase (){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference tutorialRef = database.getReference("equipos");
-        tutorialRef.child("equipo").addValueEventListener(new ValueEventListener() {
+        tutorialRef.child("prueba").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Equipo2 equipo2 = dataSnapshot.getValue(Equipo2.class);
-                Log.w("EQUIPO:       ", equipo2.getNombre()+"");
+                Equipo equipo = dataSnapshot.getValue(Equipo.class);
+                Log.w("EQUIPO:       ", equipo.getNombre()+"");
             }
 
             @Override
@@ -138,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
         String escudo = "Escudo";*/
 
 
-        Equipo e = new Equipo(2, "SEAL", "Cuevas", "Equipo de cuevas", "Escudo SEAL");
+        //Equipo e = new Equipo(2, "SEAL", "Cuevas", "Equipo de cuevas", "Escudo SEAL");
 
-        databaseReference.child("equipos").child(e.getId_equipo()+"").setValue(e);
+        //databaseReference.child("equipos").child(e.getId_equipo()+"").setValue(e);
         //mDatabase.child("users").child(userId).setValue(user);
     }
 
