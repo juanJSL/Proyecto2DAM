@@ -20,7 +20,8 @@ public class CrearEquipo extends AppCompatActivity {
         abrirMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CrearEquipo.this, PantallaUbicacionEquipo.class));
+                //startActivity(new Intent(CrearEquipo.this, PantallaUbicacionEquipo.class));
+                startActivity(new Intent(CrearEquipo.this, PruebaObtenerUbicacion.class));
             }
         });
     }

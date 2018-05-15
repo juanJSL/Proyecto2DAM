@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jjsimon.proyectodam.Clases.Jugador;
-import com.google.android.gms.common.data.TextFilterable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

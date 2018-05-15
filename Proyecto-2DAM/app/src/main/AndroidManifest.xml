@@ -8,7 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -36,11 +36,10 @@
             android:value="AIzaSyCS0fqX2B6vVtIFa8Ekot7NHnQZwXcsG9s" />
 
         <activity android:name=".CrearEquipo" />
-
-
         <activity
             android:name=".PantallaUbicacionEquipo"
-            android:label="@string/title_activity_pantalla_ubicacion_equipo"></activity>
+            android:label="@string/title_activity_pantalla_ubicacion_equipo" />
+        <activity android:name=".PruebaObtenerUbicacion"></activity>
     </application>
 
 </manifest>
