@@ -21,6 +21,8 @@
     <string name="volver">Volver</string>
     <string name="cancelar">Cancelar</string>
     <string name="sin_equipo">Aun no perteneces a ningun equipo</string>
+    <string name="si">Si</string>
+
 
 
     <!-- TODO: Remove orange this placeholder text -->
@@ -46,6 +48,11 @@
     <string name="descripcion">Algo sobre vosotros....</string>
     <string name="ubicacion_bt">¿Donde se encuentra tu equipo?</string>
     <string name="title_activity_pantalla_ubicacion_equipo">Map</string>
+
+    <!--ACTIVIDAD UBICACION EQUIPO-->
+    <string name="wubicequip_tilte_conf_dialog">Ubicacion</string>
+    <string name="wubicequip_msj_dialog">¿Deseas utilizar esta ubicación para tu equipo?</string>
+
 
 
 </resources>

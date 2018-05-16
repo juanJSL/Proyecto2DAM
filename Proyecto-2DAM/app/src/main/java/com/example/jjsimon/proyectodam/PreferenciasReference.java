@@ -8,4 +8,6 @@ package com.example.jjsimon.proyectodam;
 public class PreferenciasReference {
     public static final String LOGUEADO = "logueado";
     public static final String PREFERENCIAS = "preferencias";
+
+
 }
