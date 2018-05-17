@@ -3,8 +3,8 @@ package com.example.jjsimon.proyectodam.FireBase;
 public class FireBaseReferences {
     //EQUIPOS
     public static final String EQUIPOS = "equipos";
-    public static final String ADMINISTRADOR = "id_admin";
-    public static final String ID_EQUIPO = "id_equipo";
+    public static final String ADMINISTRADOR = "idAdmin";
+    public static final String ID_EQUIPO = "idEquipo";
     public static final String NOMBRE_EQUIPO = "nombre";
     public static final String UBICACION_EQUIPO = "ubicacion";
 
@@ -20,3 +20,5 @@ public class FireBaseReferences {
     //ALD
     public static final String ALD = "ald";
 }
+
+

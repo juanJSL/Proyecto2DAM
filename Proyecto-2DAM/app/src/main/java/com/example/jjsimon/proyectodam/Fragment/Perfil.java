@@ -1,6 +1,5 @@
 package com.example.jjsimon.proyectodam.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,13 +92,13 @@ public class Perfil extends Fragment {
             DatabaseReference bdd = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
 
             //Busco el nodo con el id del usuario actual
-            bdd.child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+            bdd.child(idUser).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Jugador jugador = dataSnapshot.getValue(Jugador.class);
                     nick = jugador.getNick();
                     rol = jugador.getRol();
-                    nombreEquipo = jugador.getEquipo();
+                    nombreEquipo = jugador.getIdEquipo();
 
                     nickTV.setText(nick);
                     rolTV.setText(rol);
@@ -107,7 +106,7 @@ public class Perfil extends Fragment {
                         equipoTV.setText(nombreEquipo);
                     else
                         equipoTV.setText("Libre");
-                    Log.w("EQUIPO", ""+ jugador.getEquipo());
+                    Log.w("EQUIPO", ""+ jugador.getIdEquipo());
                 }
 
                 @Override

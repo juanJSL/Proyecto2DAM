@@ -7,12 +7,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.jjsimon.proyectodam.Clases.Equipo;
+import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CrearEquipo extends AppCompatActivity {
     private int PANTALLA_UBICACION_EQUIPO = 1;
@@ -85,13 +91,51 @@ public class CrearEquipo extends AppCompatActivity {
         }
     }
 
+    /**
+     * Este metodo se encarga de guardar en la base de datos un nuevo equipo, para ello crea una
+     * referencia a la base de datos apuntando al nodo EQUIPOS, con esta referencia a la BD
+     * llamos al metodo push que devuelve una referencia a la base de datos, esta referencia será
+     * el nuevo nodo dentro de "EQUIPOS", de está referencia obtengo la key (llave primaria)
+     * y la guardo en una variable auxiliar de tipo cadena, una vez tengo la llave primaria
+     * para el nuevo equipo lo guardo en la base de datos y modifico la informacion del usuario
+     * para indicar que pertenece a ese equipo
+     */
     private void guardarEquipo() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        equipo = new Equipo("idequipo", nombreEquipo.getText()+"", ubicacion, descripcionEquipo.getText()+"", "escudo", auth.getCurrentUser().getUid() );
+        String idEquipo;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //Creo el objeto equipo con los datos que se deben guardar
+        equipo = new Equipo("idequipo", nombreEquipo.getText()+"", ubicacion, descripcionEquipo.getText()+"", "escudo", user.getUid() );
 
         //Creo una referencia a la base de datos
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Log.w("creando_equipo", databaseReference.child(FireBaseReferences.EQUIPOS).push().getKey());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(FireBaseReferences.EQUIPOS);
+        //Obtengo la referencia par ael nuevo nodo
+        databaseReference = databaseReference.push();
+        //Obtengo la key para la nueva entrada
+        idEquipo = databaseReference.getKey();
+        //Guardo el objeto equipo en la BD
+        databaseReference.setValue(equipo);
+
+
+        //Llamo al metodo encargado de actualizarUsuario para que actualice el equipo del usuario actual
+        actualizarUsuario(idEquipo, user.getUid());
     }
 
+
+    /**
+     * Este metodo se encarga de modificar la informacion del usuario añadiendo el id del equipo al que pertenece
+     * @param idEquipo  cadena que contiene el id del equipo
+     * @param idJugador cadena con el id del usuario que se debe modificar
+     */
+    private void actualizarUsuario(String idEquipo, String idJugador) {
+        //Referencia a la base de datos apuntando al nodo jugadores
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+
+        databaseReference.child(idJugador).child(FireBaseReferences.ID_EQUIPO).setValue(idEquipo);
+        finish();
+    }
+
+
+
 }
+

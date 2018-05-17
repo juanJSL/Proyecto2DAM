@@ -36,123 +36,38 @@ public class PestanaEquipo extends Fragment {
     private boolean tieneEquipo;
     private Equipo equipo;
     private String idEquipo;
+    private Jugador jugador;
 
     private View fragmentEquipo=null;
 
     private TextView nombreEquipoET;
     private Button crearEquipoBT;
 
-    private ArrayList<Jugador> jugadorList = new ArrayList<>();
+    private ArrayList<Jugador> jugadorList;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
 
-    private Equipo equipos;
+    private LayoutInflater layoutInflater;
+    private ViewGroup viewGroup;
+    private Bundle bundle;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.w("FRAGMENT", "Llamada OnCreate");
+        Log.w("PESTANA_EQUIPO", "Metodo cargar con equipo llamado");
 
-        //Compruebo si el usuario tiene equipo par mostrar un layout u otro
-        if(tieneEquipo()){
-            cargarConEquipo(inflater, container, savedInstanceState);
-        }else{
-            //cargarConEquipo(inflater, container, savedInstanceState);
-            cargarSinEquipo(inflater, container, savedInstanceState);
-        }
+        layoutInflater = inflater;
+        viewGroup = container;
+        bundle = savedInstanceState;
 
+
+        //cargarFragment();
+
+
+        consultarJugador();
+        Log.w("PESTANA_EQUIPO", ""+fragmentEquipo);
         return fragmentEquipo;
     }
-
-
-
-
-
-    /**
-     * Este metodo se encarga de comprobar que el usuario pertenece a un equipo, en el caso
-     * de que el usuario tenga un equipo carga la informacion de dicho equipo en la variable "equipo"
-     * @return true -> si el usuario tiene equipo       false -> si el usuario no tiene equipo
-     */
-    private  boolean tieneEquipo(){
-        //Cadena para almacenar el id del usuario actual
-        String idUser = null;
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        //Id del usuario actual
-        idUser = user.getUid();
-
-        //Referencia a la BD apuntando al nodo jugadores
-        DatabaseReference bdd = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
-
-        //Busco el nodo con el id del usuario actual
-        bdd.child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Jugador jugador = dataSnapshot.getValue(Jugador.class);
-
-                if(jugador.getEquipo()!=null)
-                    tieneEquipo = true;
-                else
-                    tieneEquipo= false;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("PERFIL", "Cancelled");
-            }
-        });
-       return tieneEquipo;
-    }//Fin tiene equipo
-
-
-
-
-
-    /**
-     * Este metodo carga el layout con la informacion del equipo al que pertenece el usuario
-     */
-    private void cargarConEquipo(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-
-        fragmentEquipo = inflater.inflate(R.layout.fragment_equipo, container, false);
-
-        //Llamo al metodo que carga los datos del usuario
-        cargarDatosEquipo();
-
-        //Modifico el valor de las View
-        nombreEquipoET = (TextView) fragmentEquipo.findViewById(R.id.wequipo_nombreTV);
-
-        //Inicializo la lista de jugadores
-        inicializarLista();
-
-        //Inicializo la RecyclerView
-        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.equipoRecycler);
-
-        //inicializo el adaptador le envio como parametro la lista de jugadores
-        recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
-
-        //Enlazo el recyclerView con el adaptador
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-        //Indico el tipo de layout que va a utilizar la recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-    }//Fin cargar con equipo
-
-    /**
-     * Este metodo carga el layout en el caso de que el usuario aun no pertenezca a ningun equipo
-     */
-    private void cargarSinEquipo(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        fragmentEquipo = inflater.inflate(R.layout.fragment_pestana_sin_equipo, container, false);
-        crearEquipoBT = (Button) fragmentEquipo.findViewById(R.id.crearEquipoBT);
-
-        crearEquipoBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(fragmentEquipo.getContext(), CrearEquipo.class));
-            }
-        });
-    }
-
 
 
 
@@ -162,6 +77,7 @@ public class PestanaEquipo extends Fragment {
      * con la que se cargaran las CardView
      */
     private void inicializarLista() {
+        jugadorList  = new ArrayList<>();
         //Jugadores de prueba despues se debe sustituir por una consulta a la BD
         Jugador j1 = new Jugador("Juan Javier", "Jota", "Fusilero");
         Jugador j2 = new Jugador("Antonio", "Liria", "Fuslier");
@@ -183,20 +99,19 @@ public class PestanaEquipo extends Fragment {
      * Este metodo hace una consulta a la base de datos y obtiene los datos del equipo al que pertenece el usuario
      */
     public void cargarDatosEquipo(){
-        /**
-         * BORRAR
-         */
-        idEquipo = "prueba";
-
         //Referencia a la BD apuntando al nodo EQUIPOS
         DatabaseReference bdd = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
 
+        Log.w("PESTANA_EQUIPO", "ID EQUIPO: "+idEquipo);
         //Busco el nodo con el id del equipo del usuario
-        bdd.child("prueba").addListenerForSingleValueEvent(new ValueEventListener() {
+        bdd.child(idEquipo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 equipo = dataSnapshot.getValue(Equipo.class);
+                cargarFragment();
                 nombreEquipoET.setText(equipo.getNombre());
+                Log.w("PESTANA_EQUIPO", "Equipo: "+equipo.getNombre());
+
             }
 
             @Override
@@ -206,26 +121,51 @@ public class PestanaEquipo extends Fragment {
     }// FIN CARGAR DATOS EQUIPO
 
 
-    public int contarMiembros(){
-        int numMiembros = 0;
-        //Referencia a la BD apuntando al nodo jugadores
-        DatabaseReference bdd = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+    /**
+     * Consulto los datos del usuario actual para obtener el id de su equipo
+     */
+    public void consultarJugador(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
 
-        //Busco el nodo con el id del usuario actual
-        bdd.child(FireBaseReferences.ID_EQUIPO).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                equipo = dataSnapshot.getValue(Equipo.class);
-                nombreEquipoET.setText(equipo.getNombre());
+                jugador = dataSnapshot.getValue(Jugador.class);
+                idEquipo = jugador.getIdEquipo();
+                cargarDatosEquipo();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-        return  numMiembros;
     }
 
 
 
+
+    public void cargarFragment(){
+        fragmentEquipo = layoutInflater.inflate(R.layout.fragment_equipo, viewGroup, false);
+
+        //Enlazo las view
+        nombreEquipoET = (TextView) fragmentEquipo.findViewById(R.id.wequipo_nombreTV);
+
+        //Inicializo la lista de jugadores
+        if(jugadorList==null)
+            inicializarLista();
+
+        //Inicializo la RecyclerView
+        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.equipoRecycler);
+
+        //inicializo el adaptador le envio como parametro la lista de jugadores
+        recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
+
+        //Enlazo el recyclerView con el adaptador
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        //Indico el tipo de layout que va a utilizar la recyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+    }
 }

@@ -1,40 +1,40 @@
 package com.example.jjsimon.proyectodam.Clases;
 
 public class Equipo {
-    private String id_equipo;
+    private String idEquipo;
     private String nombre;
     private String ubicacion;
     private String descripcion;
     private String escudo;
-    private String id_admin;
+    private String idAdmin;
 
     public Equipo() {
 
     }
 
     public Equipo(String idEquipo, String nombre, String ubicacion, String descripcion, String escudo) {
-        this.id_equipo = idEquipo;
+        this.idEquipo = idEquipo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.escudo = escudo;
     }
 
-    public Equipo(String id_equipo, String nombre, String ubicacion, String descripcion, String escudo, String id_admin) {
-        this.id_equipo = id_equipo;
+    public Equipo(String id_equipo, String nombre, String ubicacion, String descripcion, String escudo, String idAdmin) {
+        this.idEquipo = id_equipo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.escudo = escudo;
-        this.id_admin = id_admin;
+        this.idAdmin = idAdmin;
     }
 
-    public String getId_equipo() {
-        return id_equipo;
+    public String getIdEquipo() {
+        return idEquipo;
     }
 
-    public void setId_equipo(String id_equipo) {
-        this.id_equipo = id_equipo;
+    public void setIdEquipo(String id_equipo) {
+        this.idEquipo = id_equipo;
     }
 
     public String getNombre() {
@@ -69,11 +69,11 @@ public class Equipo {
         this.escudo = escudo;
     }
 
-    public String getId_admin() {
-        return id_admin;
+    public String getIdAdmin() {
+        return idAdmin;
     }
 
-    public void setId_admin(String id_admin) {
-        this.id_admin = id_admin;
+    public void setIdAdmin(String id_admin) {
+        this.idAdmin = idAdmin;
     }
 }

@@ -68,11 +68,11 @@ public class Jugador {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public String getEquipo() {
+    public String getIdEquipo() {
         return idEquipo;
     }
 
-    public void setEquipo(String equipo) {
+    public void setIdEquipo(String equipo) {
         this.idEquipo = equipo;
     }
 }
