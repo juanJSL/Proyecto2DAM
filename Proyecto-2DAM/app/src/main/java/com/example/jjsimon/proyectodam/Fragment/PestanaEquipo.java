@@ -33,35 +33,40 @@ import java.util.ArrayList;
 
 public class PestanaEquipo extends Fragment {
 
-    private boolean tieneEquipo;
     private Equipo equipo;
     private String idEquipo;
     private Jugador jugador;
 
-    private View fragmentEquipo=null;
-
     private TextView nombreEquipoET;
-    private Button crearEquipoBT;
 
     private ArrayList<Jugador> jugadorList;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
 
-    private LayoutInflater layoutInflater;
-    private ViewGroup viewGroup;
-    private Bundle bundle;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.w("PESTANA_EQUIPO", "Metodo cargar con equipo llamado");
 
-        layoutInflater = inflater;
-        viewGroup = container;
-        bundle = savedInstanceState;
+        View fragmentEquipo = inflater.inflate(R.layout.fragment_equipo, container, false);
 
+        //Enlazo las view
+        nombreEquipoET = (TextView) fragmentEquipo.findViewById(R.id.wequipo_nombreTV);
 
-        //cargarFragment();
+        //Inicializo la lista de jugadores
+        if(jugadorList==null)
+            inicializarLista();
+
+        //Inicializo la RecyclerView
+        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.equipoRecycler);
+
+        //inicializo el adaptador le envio como parametro la lista de jugadores
+        recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
+
+        //Enlazo el recyclerView con el adaptador
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        //Indico el tipo de layout que va a utilizar la recyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
 
         consultarJugador();
@@ -108,7 +113,6 @@ public class PestanaEquipo extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 equipo = dataSnapshot.getValue(Equipo.class);
-                cargarFragment();
                 nombreEquipoET.setText(equipo.getNombre());
                 Log.w("PESTANA_EQUIPO", "Equipo: "+equipo.getNombre());
 
@@ -143,29 +147,4 @@ public class PestanaEquipo extends Fragment {
         });
     }
 
-
-
-
-    public void cargarFragment(){
-        fragmentEquipo = layoutInflater.inflate(R.layout.fragment_equipo, viewGroup, false);
-
-        //Enlazo las view
-        nombreEquipoET = (TextView) fragmentEquipo.findViewById(R.id.wequipo_nombreTV);
-
-        //Inicializo la lista de jugadores
-        if(jugadorList==null)
-            inicializarLista();
-
-        //Inicializo la RecyclerView
-        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.equipoRecycler);
-
-        //inicializo el adaptador le envio como parametro la lista de jugadores
-        recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
-
-        //Enlazo el recyclerView con el adaptador
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-        //Indico el tipo de layout que va a utilizar la recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-    }
 }

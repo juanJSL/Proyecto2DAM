@@ -2,13 +2,8 @@ package com.example.jjsimon.proyectodam;
 
 
 
-import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
@@ -18,14 +13,16 @@ import android.util.Log;
 
 import com.example.jjsimon.proyectodam.Adaptadores.ViewPagerAdapter;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
-import com.example.jjsimon.proyectodam.Clases.Equipo2;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.Fragment.Chat;
 import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
 import com.example.jjsimon.proyectodam.Fragment.Mapa;
 import com.example.jjsimon.proyectodam.Fragment.Perfil;
+import com.example.jjsimon.proyectodam.Fragment.PestanaSinEquipo;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,20 +35,20 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private boolean tieneEquipo;
+
+    private  ViewPagerAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Abro la pantalla de crear cuenta
-        //startActivity(new Intent(this, PantallaCrearCuenta.class));
+        comprobarEquipo();
+    }
 
 
-
-
-
-
-
+    private void inicializarViewPager(){
         //Inicializo el ViewPager
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         //Llamo al metodo que se encarga de cargar el ViewPager
@@ -59,19 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //Enlazo el viewPager con el tabLayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayouts);
         tabLayout.setupWithViewPager(viewPager);
-        //Cambio los titulos de las pestañas
-        tabLayout.getTabAt(0).setText("Mapa");
-        tabLayout.getTabAt(1).setText("Perfil");
-        tabLayout.getTabAt(2).setText("Equipo");
-        tabLayout.getTabAt(3).setText("Chat");
-
-
-
-        //pruebaFireBase();
-        //pruebaGuardarFirebase();
-        //pruebaPreferencias();
-        //Log.w("CONEXION", ""+FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        //pruebaDatosUserNow();
     }
 
 
@@ -79,29 +63,92 @@ public class MainActivity extends AppCompatActivity {
      * Este metodo carga los fragment
      */
     public void cargarViewPager(){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         //Creo los fragment
         Mapa mapa = new Mapa();
         Perfil perfil = new Perfil();
         PestanaEquipo pestanaEquipo = new PestanaEquipo();
         Chat chat = new Chat();
-
-        //adapter.addFragment(mapa);
-        //adapter.addFragment(perfil);
-        //adapter.addFragment(equipo);
-        //adapter.addFragment(chat);
-
-        Fragment[] array = {mapa, perfil, pestanaEquipo, chat};
+        PestanaSinEquipo pestanaSinEquipo = new PestanaSinEquipo();
 
         //Añado los fragment
-        for (Fragment f:array){
-            adapter.addFragment(f);
+        adapter.addFragment(mapa);
+        adapter.addFragment(perfil);
+
+        if(tieneEquipo){
+            adapter.addFragment(pestanaEquipo);
+        }else{
+            adapter.addFragment(pestanaSinEquipo);
         }
+
+        adapter.addFragment(chat);
 
         viewPager.setAdapter(adapter);
 
+    }//FIN CARGAR_VIEW_PAGER
+
+
+    private void comprobarEquipo(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(FireBaseReferences.JUGADORES);
+        databaseReference.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.w("PRINCIPAL", "On Data Change llamado");
+                Jugador j = dataSnapshot.getValue(Jugador.class);
+
+                if(j.getIdEquipo()!=null){
+                    Log.w("PRINCIPAL", "Tiene equipo");
+                    tieneEquipo=true;
+                }else{
+                    Log.w("PRINCIPAL", "No tiene equipo");
+                    tieneEquipo=false;
+                }
+                
+                inicializarViewPager();
+                cargarViewPager();
+
+                //Cambio los titulos de las pestañas
+                tabLayout.getTabAt(0).setText("Mapa");
+                tabLayout.getTabAt(1).setText("Perfil");
+                tabLayout.getTabAt(2).setText("Equipo");
+                tabLayout.getTabAt(3).setText("Chat");
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
