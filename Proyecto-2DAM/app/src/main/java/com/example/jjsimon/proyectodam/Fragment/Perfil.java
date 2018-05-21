@@ -42,6 +42,12 @@ public class Perfil extends Fragment {
     private TextView equipoTV;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //nickTV = (TextView)
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.w("PERFIL", "Llamada onCreate");
         View fragment = inflater.inflate(R.layout.fragment_perfil, container, false);

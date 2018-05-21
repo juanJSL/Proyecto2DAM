@@ -25,30 +25,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     //Metodo que devuelce el fragment de la posicion que recibe como parametro
     @Override
     public Fragment getItem(int position) {
-        Log.w("VIEW_PAGER_ADAPTER", "getItem llamado");
-        switch (position) {
-            case 0:
-                Mapa mapa = new Mapa();
-                addFragment(mapa);
-                return mapa;
-
-            case 1:
-                Perfil perfil = new Perfil();
-                addFragment(perfil);
-                return perfil;
-
-            case 2:
-                //return new PestanaEquipo();
-                PestanaSinEquipo pestanaSinEquipo = new PestanaSinEquipo();
-                addFragment(pestanaSinEquipo);
-                return pestanaSinEquipo;
-
-            case 3:
-                Chat chat = new Chat();
-                addFragment(chat);
-                return chat;
-
-        }
         return fragmentList.get(position);
     }
 

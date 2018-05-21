@@ -166,7 +166,7 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.w("DIALOGO", "CANCELAR");
+                                Log.w( "DIALOGO", "CANCELAR");
                             }
                         });
 

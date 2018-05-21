@@ -1,5 +1,8 @@
 package com.example.jjsimon.proyectodam;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
+import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -113,6 +117,7 @@ public class CrearEquipo extends AppCompatActivity {
         databaseReference = databaseReference.push();
         //Obtengo la key para la nueva entrada
         idEquipo = databaseReference.getKey();
+        equipo.setIdEquipo(idEquipo);
         //Guardo el objeto equipo en la BD
         databaseReference.setValue(equipo);
 
@@ -132,8 +137,12 @@ public class CrearEquipo extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
 
         databaseReference.child(idJugador).child(FireBaseReferences.ID_EQUIPO).setValue(idEquipo);
+
+
         finish();
     }
+
+
 
 
 

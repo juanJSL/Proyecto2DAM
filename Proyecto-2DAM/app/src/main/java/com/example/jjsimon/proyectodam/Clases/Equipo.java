@@ -3,7 +3,7 @@ package com.example.jjsimon.proyectodam.Clases;
 public class Equipo {
     private String idEquipo;
     private String nombre;
-    private String ubicacion;
+    private String ubicacion;//Primero latitud luego longitud
     private String descripcion;
     private String escudo;
     private String idAdmin;
