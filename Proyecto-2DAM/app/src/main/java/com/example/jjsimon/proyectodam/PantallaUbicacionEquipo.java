@@ -53,6 +53,23 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initLocation,1));
         obtenerUbicacion();
+
+        //Añado la funcionalidad en el caso de pulsar de panera prolongada en un punto
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                marker.setPosition(latLng);
+            }
+        });
+
+        //Añado la funcionalidad para cuando pulsamos encima de un marcador
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                crearDialog();
+                return true;
+            }
+        });
     }
 
 
@@ -61,13 +78,9 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
         if (requestCode == PETICION_PERMISO_LOCALIZACION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 obtenerUbicacion();
-                Log.e("PERMISOS", "Permiso concedido");
             } else {
-                //Permiso denegado:
-                //Deberíamos deshabilitar toda la funcionalidad relativa a la localización.
                 Toast.makeText(this, "Debes dar permisos para poder seleccionar la ubicacion", Toast.LENGTH_LONG).show();
                 finish();
-                Log.e("PERMISOS", "Permiso denegado");
             }
         }
     }
@@ -83,12 +96,10 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
         //Compruebo los permisos
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Log.e("UBIC_EQUIPO", "Tiene permisos");
             //Comprobar que el gps esta activo
             LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
             if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Log.w("UBIC_EQUIPO", "GPS activado");
                 client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
@@ -96,53 +107,22 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
                         double latitude = location.getLatitude();
                         double longitud = location.getLongitude();
 
-
-                        Log.w("UBIC_EQUIPO", "Latitud " + latitude);
-                        Log.w("UBIC_EQUIPO", "longitud " + longitud);
-
                         LatLng latLng = new LatLng(latitude, longitud);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
                         marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Ubicacion actual").draggable(true));
-
-                        anyadirListener();
-
-
                     }
                 });
             } else {
                 //Si el gps no esta activado muestro un toast
                 Toast.makeText(this, "Debes activar el GPS para recuperar tu ubicacion", Toast.LENGTH_LONG).show();
-                Log.w("UBIC_EQUIPO", "GPS desactivado");
             }
         }else{
-            Log.e("UBIC_EQUIPO", "No tiene permisos");
-            pedirPermisos();
+            //Si no tiene permisos los pido
+            Utilidades.pedirPermisosUbicacion(this, PETICION_PERMISO_LOCALIZACION);
         }
     }
 
 
-    public void pedirPermisos(){
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                PETICION_PERMISO_LOCALIZACION);
-    }
-
-    public void anyadirListener(){
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                marker.setPosition(latLng);
-            }
-        });
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                crearDialog();
-                return true;
-            }
-        });
-    }
 
     public void crearDialog(){
 
@@ -154,7 +134,6 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.w("DIALOGO", "OK");
                                 Intent i = new Intent();
                                 String ubicacion = marker.getPosition().latitude+","+marker.getPosition().longitude;
                                 i.putExtra("ubicacion",ubicacion);
