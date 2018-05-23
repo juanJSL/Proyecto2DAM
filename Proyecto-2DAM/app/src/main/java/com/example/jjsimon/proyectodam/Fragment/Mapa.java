@@ -72,6 +72,15 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         LatLng initLocation = new LatLng(36.840835, -2.471172);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(initLocation));
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Equipo e = (Equipo) marker.getTag();
+                Log.w("COMPROBAR_TAG", ""+e.getNombre());
+                marker.showInfoWindow();
+                return false;
+            }
+        });
         consultarEquipos();
         ubicacionActual();
 
@@ -121,7 +130,8 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         Bitmap icon = generator.makeIcon();
 
         MarkerOptions tp = new MarkerOptions().position(latLng).title(e.getNombre()).icon(BitmapDescriptorFactory.fromBitmap(icon));
-        mMap.addMarker(tp).showInfoWindow();
+        mMap.addMarker(tp).setTag(e);
+
     }
 
     @Override
