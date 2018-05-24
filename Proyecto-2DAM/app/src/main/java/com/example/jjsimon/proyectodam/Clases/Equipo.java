@@ -76,4 +76,11 @@ public class Equipo {
     public void setIdAdmin(String id_admin) {
         this.idAdmin = idAdmin;
     }
+
+
+    @Override
+    public String toString() {
+        return "Nombre: "+ this.nombre+
+                "\nID: "+ this.idEquipo;
+    }
 }

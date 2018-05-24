@@ -57,7 +57,7 @@ public class PestanaEquipo extends Fragment {
             inicializarLista();
 
         //Inicializo la RecyclerView
-        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.equipoRecycler);
+        recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.we_equipoRecycler);
 
         //inicializo el adaptador le envio como parametro la lista de jugadores
         recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
@@ -70,7 +70,6 @@ public class PestanaEquipo extends Fragment {
 
 
         consultarJugador();
-        Log.w("PESTANA_EQUIPO", ""+fragmentEquipo);
         return fragmentEquipo;
     }
 
@@ -107,15 +106,12 @@ public class PestanaEquipo extends Fragment {
         //Referencia a la BD apuntando al nodo EQUIPOS
         DatabaseReference bdd = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
 
-        Log.w("PESTANA_EQUIPO", "ID EQUIPO: "+idEquipo);
         //Busco el nodo con el id del equipo del usuario
         bdd.child(idEquipo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 equipo = dataSnapshot.getValue(Equipo.class);
                 nombreEquipoET.setText(equipo.getNombre());
-                Log.w("PESTANA_EQUIPO", "Equipo: "+equipo.getNombre());
-
             }
 
             @Override
@@ -146,5 +142,4 @@ public class PestanaEquipo extends Fragment {
             }
         });
     }
-
 }

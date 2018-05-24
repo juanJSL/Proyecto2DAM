@@ -1,4 +1,4 @@
-package com.example.jjsimon.proyectodam;
+package com.example.jjsimon.proyectodam.Referencias;
 
 /**
  * Esta clase contiene las cadenas que hacen referencia a las preferencias que almacena la aplicaicon

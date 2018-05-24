@@ -2,10 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.PestanaEquipo">
+    tools:context=".ActivityEquipo">
+
 
 
     <ImageView
@@ -28,26 +28,28 @@
         app:layout_constraintGuide_percent="0.30136988" />
 
     <TextView
-        android:id="@+id/wequipo_nombretitle"
+        android:id="@+id/equipo_nombretitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Nombre:"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/wequipo_nombreTV"
-        android:layout_width="wrap_content"
+        android:id="@+id/equipo_nombreTV"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/wequipo_nombretitle"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/equipo_nombretitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/wequipo_distanciaTV"
+        android:id="@+id/equipo_distanciaTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -55,29 +57,29 @@
         android:layout_marginTop="8dp"
         android:text="10Km"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/wequipo_numJugadoresTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/equipo_numJugadoresTitle" />
 
     <TextView
-        android:id="@+id/wequipo_numJugadoresTitle"
+        android:id="@+id/equipo_numJugadoresTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Miembros:"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toBottomOf="@+id/wequipo_nombretitle" />
+        app:layout_constraintTop_toBottomOf="@+id/equipo_nombretitle" />
 
     <TextView
-        android:id="@+id/wequipo_numjugadoresTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/equipo_numjugadoresTV"
+        android:layout_width="16dp"
+        android:layout_height="27dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="10"
-        app:layout_constraintStart_toEndOf="@+id/wequipo_numJugadoresTitle"
-        app:layout_constraintTop_toBottomOf="@+id/wequipo_nombreTV" />
+        app:layout_constraintStart_toEndOf="@+id/equipo_numJugadoresTitle"
+        app:layout_constraintTop_toBottomOf="@+id/equipo_nombretitle" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline7"
@@ -87,6 +89,7 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -96,13 +99,13 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/we_equipoRecycler"
+            android:id="@+id/equipo_Recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/we_peticionBT"
+        android:id="@+id/peticionBT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

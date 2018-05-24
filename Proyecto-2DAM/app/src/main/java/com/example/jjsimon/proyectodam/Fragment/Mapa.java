@@ -3,6 +3,7 @@ package com.example.jjsimon.proyectodam.Fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,18 +20,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.jjsimon.proyectodam.ActivityEquipo;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.R;
+import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
+import com.example.jjsimon.proyectodam.Utilidades;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -47,7 +49,7 @@ import java.util.ArrayList;
 
 public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
     private static final int PETICION_PERMISO_LOCALIZACION = 120;
-    GoogleMap mMap;
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,36 +63,23 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
 
-        CameraUpdate camUpd;
-        CameraPosition camPos;
-        int vistaActual=0;
-
         mMap = map;
 
-
-        // Add a marker in Sydney and move the camera
         LatLng initLocation = new LatLng(36.840835, -2.471172);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(initLocation));
-        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Equipo e = (Equipo) marker.getTag();
-                Log.w("COMPROBAR_TAG", ""+e.getNombre());
-                marker.showInfoWindow();
-                return false;
-            }
-        });
-        consultarEquipos();
-        ubicacionActual();
 
+        anyadirListener();//Añado los listener al mapa
+        consultarEquipos();//Hago la consulta a la BD y pongo los marcadores para los euqipos
+        ubicacionActual();//Cambio la posicion del mapa a la ubicacion actual
     }
 
 
-
-    public void consultarEquipos(){
+    /**
+     * Este metodo hace una consulta a la base de datos y recupera los equipos almacenados en ella
+     * cada vez que recupera un equipo pone un marcador en el mapa
+     */
+    private void consultarEquipos(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final ArrayList<Equipo> arrayList = new ArrayList<>();
         reference.child(FireBaseReferences.EQUIPOS).addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -99,13 +88,8 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
                 for (DataSnapshot equiposSnapshot : dataSnapshot.getChildren()){
                     //Guardo los datos en un objeto del tipo equipo
                     Equipo equipo = equiposSnapshot.getValue(Equipo.class);
-
-                    //Pongo un marcador con los datos del objeto equipo
-                    String [] ubicacion = equipo.getUbicacion().split(",");
-                    LatLng latLng = new LatLng(Double.parseDouble(ubicacion[0]),Double.parseDouble(ubicacion[1]));
-                    //Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(equipo.getNombre()).draggable(true).snippet("Snippet"));
-                    pruebaiconGenerator(equipo, latLng);
-
+                    Log.w("EQUIPOSS", equipo.toString());
+                    ponerMarcador(equipo);
                 }
             }
 
@@ -116,12 +100,20 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         });
     }//FIN CONSULTAR EQUIPOS
 
+    /**
+     * Este metido se encarga de poner un marcador en el mapa con los datos del equipo
+     * @param equipo Objeto del tipo equipo con los datos obtenidos de la BD
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void pruebaiconGenerator(Equipo e, LatLng latLng){
+    public void ponerMarcador(Equipo equipo){
 
+        //Obtengo la ubicacion del objeto equipo
+        String [] ubicacion = equipo.getUbicacion().split(",");
+        LatLng latLng = new LatLng(Double.parseDouble(ubicacion[0]),Double.parseDouble(ubicacion[1]));
 
+        //Cambio el tipo de marcador
         TextView text = new TextView(getContext());
-        text.setText(e.getNombre());
+        text.setText(equipo.getNombre());
         IconGenerator generator = new IconGenerator(getContext());
 
         generator.setBackground(getContext().getDrawable(R.drawable.amu_bubble_mask));
@@ -129,17 +121,24 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         generator.setColor(Color.WHITE);
         Bitmap icon = generator.makeIcon();
 
-        MarkerOptions tp = new MarkerOptions().position(latLng).title(e.getNombre()).icon(BitmapDescriptorFactory.fromBitmap(icon));
-        mMap.addMarker(tp).setTag(e);
+        //Creo y añado el marcador
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .title(equipo.getNombre())
+                .snippet(equipo.getDescripcion())
+                .icon(BitmapDescriptorFactory.fromBitmap(icon));
+        /*Añado un tag al marcador de manera que guarde el objeto equipo, ya que los datos que almacena
+        * este objeto seran necesarios para abrir una actividad cuando se pulse */
+        mMap.addMarker(markerOptions).setTag(equipo);
 
-    }
+    }//FIN PONER MARCADOR
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == PETICION_PERMISO_LOCALIZACION) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ubicacionActual();
-                Log.e("PERMISOS", "Permiso concedido");
             } else {
                 Toast.makeText(getContext(), "Debes dar permisos para poder seleccionar la ubicacion", Toast.LENGTH_LONG).show();
             }
@@ -147,7 +146,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
     }
 
     /**
-     * Este metodo obtiene la ubicacion actual del usuario y la guarda en una variable
+     * Este metodo obtiene la ubicacion actual del usuario y mueve la camara del mapa hasta esa posicion
      */
     private void ubicacionActual(){
 
@@ -156,9 +155,10 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         //Compruebo los permisos
         if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //Comprobar que el gps esta activo
-            LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
+            LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            //Comprobar que el gps esta activo
+            //Si el gps esta activado muevo la camara
             if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
@@ -174,14 +174,38 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
                 Toast.makeText(getContext(), "Debes activar el GPS para recuperar tu ubicacion", Toast.LENGTH_LONG).show();
             }
         }else{
-            pedirPermisos();
+            //Si no hay permisos los pido
+            Utilidades.pedirPermisosUbicacion(getActivity(), PETICION_PERMISO_LOCALIZACION);
         }
     }//FIN OBTENER UBICACION
 
 
-    public void pedirPermisos(){
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                PETICION_PERMISO_LOCALIZACION);
-    }
+    /**
+     * Llamo a este metodo para añadir todos los listener al mapa
+     */
+    private void anyadirListener(){
+        /*Añado el listener para cuando se hace click encima de un marcador
+         * lo unico que hará será abrir la ventana de información*/
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                return false;
+            }
+        });
+
+        /*Añado el listener para cuando se pulse la ventana de información, lo que hará será abrir
+         * una nueva actividad con la información del equipo que se ha pulsado*/
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Equipo equipo = (Equipo) marker.getTag();
+                Intent i = new Intent(getActivity(), ActivityEquipo.class);
+                i.putExtra(ExtrasRef.ID_EQUIPO, equipo.getIdEquipo());
+                i.putExtra(ExtrasRef.NOMBRE_EQUIPO, equipo.getNombre());
+                startActivity(i);
+            }
+        });
+    }//FIN ANYADIR LISTENER
+
 }

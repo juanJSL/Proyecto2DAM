@@ -3,13 +3,6 @@ package com.example.jjsimon.proyectodam.Adaptadores;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
-
-import com.example.jjsimon.proyectodam.Fragment.Chat;
-import com.example.jjsimon.proyectodam.Fragment.Mapa;
-import com.example.jjsimon.proyectodam.Fragment.Perfil;
-import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
-import com.example.jjsimon.proyectodam.Fragment.PestanaSinEquipo;
 
 import java.util.ArrayList;
 import java.util.List;
