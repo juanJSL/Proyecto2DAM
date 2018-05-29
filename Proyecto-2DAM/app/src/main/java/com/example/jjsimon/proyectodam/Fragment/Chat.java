@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -46,10 +47,6 @@ public class Chat extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        
-
-
-
         return fragment;
     }
 
@@ -70,7 +67,6 @@ public class Chat extends Fragment {
         Conversacion [] array = {c ,c1, c2, c3, c4, c5};
 
         for (Conversacion conversacion: array) {
-            Log.w("BUCLE", "PASO POR EL BUCLE");
             conversacionesList.add(conversacion);
         }
     }
