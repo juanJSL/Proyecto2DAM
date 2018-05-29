@@ -47,7 +47,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     /**
-     * Clase que exitende de la clase ViewHolder para poder crear las CardView
+     * Clase que exitende de la clase ViewHolder para
+     * cargarr las CardView
      */
     public static class JugadoresViewHolder extends RecyclerView.ViewHolder{
 

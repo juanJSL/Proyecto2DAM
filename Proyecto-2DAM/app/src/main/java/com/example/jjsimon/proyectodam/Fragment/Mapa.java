@@ -163,6 +163,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
                 client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
+                        Log.w("OBJETO LOCATION", ""+location);
                         double latitude = location.getLatitude();
                         double longitud = location.getLongitude();
                         LatLng latLng = new LatLng(latitude, longitud);
