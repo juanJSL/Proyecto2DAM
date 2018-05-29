@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.jjsimon.proyectodam.Clases.Equipo;
@@ -41,11 +42,10 @@ public class ActivityEquipo extends AppCompatActivity {
         //Enlazo las view
         this.nombreEquipoTV = (TextView) findViewById(R.id.equipo_nombreTV);
         nombreEquipoTV.setText(getIntent().getExtras().getString(ExtrasRef.NOMBRE_EQUIPO));
+        idEquipo = getIntent().getExtras().getString(ExtrasRef.ID_EQUIPO);
 
 
-        //Inicializo la lista de jugadores
-        if(jugadorList==null)
-            inicializarLista();
+        jugadorList  = new ArrayList<>();
 
 
         //Inicializo la RecyclerView
@@ -59,6 +59,8 @@ public class ActivityEquipo extends AppCompatActivity {
 
         //Indico el tipo de layout que va a utilizar la recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        consultarJugadores(idEquipo);
     }
 
     /**
@@ -66,7 +68,7 @@ public class ActivityEquipo extends AppCompatActivity {
      * con la que se cargaran las CardView
      */
     private void inicializarLista() {
-        jugadorList  = new ArrayList<>();
+
         consultarJugadores(getIntent().getExtras().getString(ExtrasRef.ID_EQUIPO));
         //Jugadores de prueba despues se debe sustituir por una consulta a la BD
         /*Jugador j1 = new Jugador("Juan Javier", "Jota", "Fusilero");
@@ -88,12 +90,15 @@ public class ActivityEquipo extends AppCompatActivity {
         databaseReference.child(FireBaseReferences.JUGADORES).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                jugadorList.removeAll(jugadorList);
+                Log.w("NUEVOUSU", idEquipo);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Jugador jugador = snapshot.getValue(Jugador.class);
                     if(jugador.getIdEquipo().equals(idEquipo)){
                             jugadorList.add(jugador);
                     }
                 }
+                recyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
