@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.jjsimon.proyectodam.Clases.Jugador;
+import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -174,7 +175,7 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Guardo el uusario en la base de datos
-        databaseReference.child("jugadores").child(jugador.getIdJugador()).setValue(jugador);
+        databaseReference.child(FireBaseReferences.JUGADORES).child(jugador.getIdJugador()).setValue(jugador);
     }//FIN GUARDAR USER
 
 

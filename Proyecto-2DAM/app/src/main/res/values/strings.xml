@@ -2,14 +2,13 @@
     <string name="app_name">ProyectoDAM</string>
 
     <!-- PANTALLA LOGIN -->
-    <string name="mail_et_wlog">E-mail</string>
     <string name="pwd_et_wlog">Contraseña</string>
     <string name="entrar_bt_wlog">Entrar</string>
     <string name="crear_cuenta_tv_wlog">Crear una nueva cuenta</string>
 
     <!-- PANTALLA CREAR CUENTA -->
     <string name="mail_et_wcreacu">E-mail</string>
-    <string name="nick_et_wcreacu">Nick</string>
+
     <string name="pwd_et_wcreacu">Contraseña</string>
     <string name="repetir_pwd_et_wcreacu">Repetir contraseña</string>
     <string name="fnac_et_wcreacu">Fecha de nacimiento</string>
@@ -22,7 +21,8 @@
     <string name="cancelar">Cancelar</string>
     <string name="sin_equipo">Aun no perteneces a ningun equipo</string>
     <string name="si">Si</string>
-
+    <string name="enviar">Enviar</string>
+    <string name="escribir_mensaje">Enviar mensaje...</string>
 
     <!-- TODO: Remove orange this placeholder text -->
     <string name="title_activity_maps">Map</string>
@@ -52,8 +52,18 @@
     <string name="wubicequip_tilte_conf_dialog">Ubicacion</string>
     <string name="wubicequip_msj_dialog">¿Deseas utilizar esta ubicación para tu equipo?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--ACTIVIDAD JUGADOR-->
+    <string name="enviar_privado">Enviar mensaje privado</string>
+
+
+
+    <!--DATOS JUGADOR-->
+    <string name="nick">Nick:</string>
+    <string name="rol">Rol:</string>
+    <string name="equipo">Equipo:</string>
+    <string name="mail">E-mail</string>
+
+
 
 
 </resources>

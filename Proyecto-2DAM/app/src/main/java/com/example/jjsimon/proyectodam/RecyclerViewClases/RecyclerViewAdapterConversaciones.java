@@ -47,8 +47,6 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
             }
         });
 
-
-
         return holder;
     }
 
