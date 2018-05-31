@@ -153,7 +153,7 @@ public class PantallaCrearCuenta extends AppCompatActivity {
                             firebaseAuth.signInWithEmailAndPassword(correoStr, pwdStr);
                             Log.w("CONEXION", "antessss       "+FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             startActivity(new Intent(PantallaCrearCuenta.this, MainActivity.class));
-                            //finish();
+                            finish();
                         }else {
                             Toast.makeText(PantallaCrearCuenta.this, R.string.error_registro_no_completado, Toast.LENGTH_LONG).show();
                         }

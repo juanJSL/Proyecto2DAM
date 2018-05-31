@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
-import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapter;
+import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterJugador;
 import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +29,7 @@ public class ActivityEquipo extends AppCompatActivity {
 
     private ArrayList<Jugador> jugadorList;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerViewAdapterJugador recyclerViewAdapterJugador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,10 @@ public class ActivityEquipo extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.equipo_Recycler);
 
         //inicializo el adaptador le envio como parametro la lista de jugadores
-        recyclerViewAdapter = new RecyclerViewAdapter(jugadorList);
+        recyclerViewAdapterJugador = new RecyclerViewAdapterJugador(jugadorList);
 
         //Enlazo el recyclerView con el adaptador
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(recyclerViewAdapterJugador);
 
         //Indico el tipo de layout que va a utilizar la recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -94,11 +93,11 @@ public class ActivityEquipo extends AppCompatActivity {
                 Log.w("NUEVOUSU", idEquipo);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Jugador jugador = snapshot.getValue(Jugador.class);
-                    if(jugador.getIdEquipo().equals(idEquipo)){
+                    if(jugador.getIdEquipo()!=null && jugador.getIdEquipo().equals(idEquipo)){
                             jugadorList.add(jugador);
                     }
                 }
-                recyclerViewAdapter.notifyDataSetChanged();
+                recyclerViewAdapterJugador.notifyDataSetChanged();
             }
 
             @Override

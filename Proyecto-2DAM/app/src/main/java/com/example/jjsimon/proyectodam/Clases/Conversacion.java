@@ -5,6 +5,7 @@ package com.example.jjsimon.proyectodam.Clases;
  */
 
 public class Conversacion {
+    private String idConversacion;
     private String idEmisor;
     private String idReceptor;
     private String nickEmisor;
@@ -12,10 +13,19 @@ public class Conversacion {
     public Conversacion() {
     }
 
-    public Conversacion(String idEmisor, String idReceptor, String nickEmisor) {
+    public Conversacion(String idConversacion, String idEmisor, String idReceptor, String nickEmisor) {
+        this.idConversacion = idConversacion;
         this.idEmisor = idEmisor;
         this.idReceptor = idReceptor;
         this.nickEmisor = nickEmisor;
+    }
+
+    public String getIdConversacion() {
+        return idConversacion;
+    }
+
+    public void setIdConversacion(String idConversacion) {
+        this.idConversacion = idConversacion;
     }
 
     public String getIdEmisor() {

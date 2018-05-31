@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jjsimon.proyectodam.Clases.ALD;
+import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.R;
@@ -31,7 +32,7 @@ public class Perfil extends Fragment {
     //Varibales para almacenar los datos del usuario en la consulta
     private String nick;
     private String rol;
-    private String nombreEquipo = "FALTA LA CONSULTA";
+    private String idEquipo = "FALTA LA CONSULTA";
 
     private ArrayList<ALD> aldList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -104,12 +105,12 @@ public class Perfil extends Fragment {
                     Jugador jugador = dataSnapshot.getValue(Jugador.class);
                     nick = jugador.getNick();
                     rol = jugador.getRol();
-                    nombreEquipo = jugador.getIdEquipo();
+                    idEquipo = jugador.getIdEquipo();
 
                     nickTV.setText(nick);
                     rolTV.setText(rol);
-                    if(nombreEquipo!=null)
-                        equipoTV.setText(nombreEquipo);
+                    if(idEquipo !=null)
+                        consultarEquipo();
                     else
                         equipoTV.setText("Libre");
                     Log.w("EQUIPO", ""+ jugador.getIdEquipo());
@@ -142,5 +143,22 @@ public class Perfil extends Fragment {
         aldList.add(a3);
         aldList.add(a4);
         aldList.add(a5);
+    }
+
+
+    private void consultarEquipo(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
+        reference.child(idEquipo).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Equipo equipo = dataSnapshot.getValue(Equipo.class);
+                equipoTV.setText(equipo.getNombre());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

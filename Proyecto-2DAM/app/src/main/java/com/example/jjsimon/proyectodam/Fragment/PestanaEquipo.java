@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.R;
-import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapter;
+import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterJugador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +38,7 @@ public class PestanaEquipo extends Fragment {
 
     private ArrayList<Jugador> jugadoresList;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerViewAdapterJugador recyclerViewAdapterJugador;
 
 
     @Override
@@ -53,10 +54,10 @@ public class PestanaEquipo extends Fragment {
         jugadoresList = new ArrayList<>();
 
         //inicializo el adaptador le envio como parametro la lista de jugadores
-        recyclerViewAdapter = new RecyclerViewAdapter(jugadoresList);
+        recyclerViewAdapterJugador = new RecyclerViewAdapterJugador(jugadoresList);
 
         //Enlazo el recyclerView con el adaptador
-        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(recyclerViewAdapterJugador);
 
         //Indico el tipo de layout que va a utilizar la recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -128,11 +129,13 @@ public class PestanaEquipo extends Fragment {
                 //Vacio la lista de jugadores
                 jugadoresList.removeAll(jugadoresList);
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Log.w("ERROOOOORR", snapshot+"");
                     Jugador j = snapshot.getValue(Jugador.class);
-                    if(j.getIdEquipo().equals(idEquipo))
+                    Log.w("ERROOOOORR", j+"");
+                    if(j.getIdEquipo()!=null && j.getIdEquipo().equals(idEquipo))
                         jugadoresList.add(j);
                 }
-                recyclerViewAdapter.notifyDataSetChanged();
+                recyclerViewAdapterJugador.notifyDataSetChanged();
             }
 
             @Override

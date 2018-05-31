@@ -21,9 +21,8 @@ import java.util.ArrayList;
  * Created by diurno on 29/05/18.
  */
 
-public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<RecyclerViewAdapterConversaciones.ConversacionesViewHolder> implements View.OnClickListener{
+public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<RecyclerViewAdapterConversaciones.ConversacionesViewHolder>{
     private ArrayList<Conversacion> conversacionesList;
-    private View.OnClickListener onClickListener;
 
     public RecyclerViewAdapterConversaciones() {
     }
@@ -59,14 +58,6 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
     public int getItemCount() {
         return conversacionesList.size();
     }
-
-
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 
     /**
      * Patron ViewHolder

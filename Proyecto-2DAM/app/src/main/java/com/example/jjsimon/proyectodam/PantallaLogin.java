@@ -115,6 +115,7 @@ public class PantallaLogin extends AppCompatActivity {
                     editor.putBoolean(PreferenciasReference.LOGUEADO, true);
                     editor.commit();
                     startActivity(new Intent(PantallaLogin.this, MainActivity.class));
+                    finish();
                     Log.w("SESION", "Sesion iniciada");
 
                 //En caso de no poder iniciar sesion se muestra un toast informando al usuario

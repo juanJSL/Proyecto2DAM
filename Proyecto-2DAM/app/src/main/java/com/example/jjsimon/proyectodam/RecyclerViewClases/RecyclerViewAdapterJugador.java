@@ -3,7 +3,6 @@ package com.example.jjsimon.proyectodam.RecyclerViewClases;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.JugadoresViewHolder> {
+public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerViewAdapterJugador.JugadoresViewHolder> {
     private ArrayList<Jugador> jugadorList;
 
 
@@ -26,7 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      * muestre en el RecyclerView
      * @param jugadorList
      */
-    public RecyclerViewAdapter(ArrayList<Jugador> jugadorList) {
+    public RecyclerViewAdapterJugador(ArrayList<Jugador> jugadorList) {
         this.jugadorList = jugadorList;
     }
 

@@ -57,12 +57,12 @@ public class Chat extends Fragment {
     private void iniciarLista(){
         conversacionesList.removeAll(conversacionesList);
 
-        Conversacion c = new Conversacion("idEmisor", "idReceptor", "EMISOR 0");
-        Conversacion c1 = new Conversacion("idEmisor", "idReceptor", "EMISOR 1");
-        Conversacion c2 = new Conversacion("idEmisor", "idReceptor", "EMISOR 2");
-        Conversacion c3 = new Conversacion("idEmisor", "idReceptor", "EMISOR 3");
-        Conversacion c4 = new Conversacion("idEmisor", "idReceptor", "EMISOR 4");
-        Conversacion c5 = new Conversacion("idEmisor", "idReceptor", "EMISOR 6");
+        Conversacion c = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 0");
+        Conversacion c1 = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 1");
+        Conversacion c2 = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 2");
+        Conversacion c3 = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 3");
+        Conversacion c4 = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 4");
+        Conversacion c5 = new Conversacion("c","idEmisor", "idReceptor", "EMISOR 6");
 
         Conversacion [] array = {c ,c1, c2, c3, c4, c5};
 

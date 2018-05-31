@@ -16,9 +16,19 @@ public class FireBaseReferences {
     public static final String NICK = "nick";
     public static final String ROL = "rol";
 
-
     //ALD
     public static final String ALD = "ald";
+
+    //CONVERSACION
+    public static String ID_CONVERSACION = "idConversacion";
+    public static String ID_EMISOR = "idEmisor";
+    public static String ID_RECEPTOR = "idReceptor";
+    public static String NICK_EMISOR = "nickEmisor";
+
+    //MENSAJE
+    public static String ID_MENSAJE = "idMensaje";
+    public static String CUERPO_MENSAJE = "cuerpoMensaje";
+    public static String FECHA = "fecha";
 }
 
 
