@@ -20,12 +20,12 @@ public class ExtrasRef {
 
     //PARA DATOS REFERENTES A UNA CONVERSACION
     public static String ID_CONVERSACION = "idConversacion";
-    public static String ID_EMISOR = "idEmisor";
-    public static String ID_RECEPTOR = "idReceptor";
     public static String NICK_EMISOR = "nickEmisor";
 
     //PARA DATOS REFERENTES A UN MENSAJE
     public static String ID_MENSAJE = "idMensaje";
     public static String CUERPO_MENSAJE = "cuerpoMensaje";
     public static String FECHA = "fecha";
+    public static String ID_EMISOR = "idEmisor";
+    public static String ID_DESTINATARIO = "idDestinatario";
 }

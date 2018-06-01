@@ -3,6 +3,7 @@ package com.example.jjsimon.proyectodam;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +50,13 @@ public class JugadorActivity extends AppCompatActivity {
         enviarPrivadoBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(JugadorActivity.this, MDActivity.class));
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String emisor = user.getUid();
+                String destinatario = idJugador;
+                Intent i = new Intent(JugadorActivity.this, MDActivity.class);
+                i.putExtra(ExtrasRef.ID_EMISOR, emisor);
+                i.putExtra(ExtrasRef.ID_DESTINATARIO, destinatario);
+                startActivity(i);
             }
         });
     }

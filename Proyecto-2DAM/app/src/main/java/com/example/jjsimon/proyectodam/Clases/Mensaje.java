@@ -1,25 +1,31 @@
 package com.example.jjsimon.proyectodam.Clases;
 
 public class Mensaje {
+
     public static int ENVIADO = 0;
     public static int RECIBIDO = 1;
     public static int ENVIO_SOLICITUD = 2;
     public static int RESPUESTA_SOLICITUD = 3;
 
+
     private String idMensaje;
     private String idConversacion;
     private String cuerpoMensaje;
     private String fecha;
+    private String idDestinatario;
+    private String idEmisor;
     private int tipoMensaje;
 
     public Mensaje() {
     }
 
-    public Mensaje(String idMensaje, String idConversacion, String cuerpoMensaje, String fecha, int tipoMensaje) {
+    public Mensaje(String idMensaje, String idConversacion, String cuerpoMensaje, String fecha, String idDestinatario, String idEmisor, int tipoMensaje) {
         this.idMensaje = idMensaje;
         this.idConversacion = idConversacion;
         this.cuerpoMensaje = cuerpoMensaje;
         this.fecha = fecha;
+        this.idDestinatario = idDestinatario;
+        this.idEmisor = idEmisor;
         this.tipoMensaje = tipoMensaje;
     }
 
@@ -53,6 +59,22 @@ public class Mensaje {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getIdDestinatario() {
+        return idDestinatario;
+    }
+
+    public void setIdDestinatario(String idDestinatario) {
+        this.idDestinatario = idDestinatario;
+    }
+
+    public String getIdEmisor() {
+        return idEmisor;
+    }
+
+    public void setIdEmisor(String idEmisor) {
+        this.idEmisor = idEmisor;
     }
 
     public int getTipoMensaje() {

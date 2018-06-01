@@ -7,16 +7,16 @@ package com.example.jjsimon.proyectodam.Clases;
 public class Conversacion {
     private String idConversacion;
     private String idEmisor;
-    private String idReceptor;
+    private String idDestinatario;
     private String nickEmisor;
 
     public Conversacion() {
     }
 
-    public Conversacion(String idConversacion, String idEmisor, String idReceptor, String nickEmisor) {
+    public Conversacion(String idConversacion, String idEmisor, String idDestinatario, String nickEmisor) {
         this.idConversacion = idConversacion;
         this.idEmisor = idEmisor;
-        this.idReceptor = idReceptor;
+        this.idDestinatario = idDestinatario;
         this.nickEmisor = nickEmisor;
     }
 
@@ -36,12 +36,12 @@ public class Conversacion {
         this.idEmisor = idEmisor;
     }
 
-    public String getIdReceptor() {
-        return idReceptor;
+    public String getIdDestinatario() {
+        return idDestinatario;
     }
 
-    public void setIdReceptor(String idReceptor) {
-        this.idReceptor = idReceptor;
+    public void setIdDestinatario(String idDestinatario) {
+        this.idDestinatario = idDestinatario;
     }
 
     public String getNickEmisor() {
