@@ -6,17 +6,17 @@ package com.example.jjsimon.proyectodam.Clases;
 
 public class Conversacion {
     private String idConversacion;
-    private String idEmisor;
-    private String idDestinatario;
+    private String idU1;
+    private String idU2;
     private String nickEmisor;
 
     public Conversacion() {
     }
 
-    public Conversacion(String idConversacion, String idEmisor, String idDestinatario, String nickEmisor) {
+    public Conversacion(String idConversacion, String idU1, String idU2, String nickEmisor) {
         this.idConversacion = idConversacion;
-        this.idEmisor = idEmisor;
-        this.idDestinatario = idDestinatario;
+        this.idU1 = idU1;
+        this.idU2 = idU2;
         this.nickEmisor = nickEmisor;
     }
 
@@ -28,20 +28,20 @@ public class Conversacion {
         this.idConversacion = idConversacion;
     }
 
-    public String getIdEmisor() {
-        return idEmisor;
+    public String getIdU1() {
+        return idU1;
     }
 
-    public void setIdEmisor(String idEmisor) {
-        this.idEmisor = idEmisor;
+    public void setIdU1(String idU1) {
+        this.idU1 = idU1;
     }
 
-    public String getIdDestinatario() {
-        return idDestinatario;
+    public String getIdU2() {
+        return idU2;
     }
 
-    public void setIdDestinatario(String idDestinatario) {
-        this.idDestinatario = idDestinatario;
+    public void setIdU2(String idU2) {
+        this.idU2 = idU2;
     }
 
     public String getNickEmisor() {

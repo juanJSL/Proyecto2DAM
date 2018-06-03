@@ -20,7 +20,9 @@ public class FireBaseReferences {
     public static final String ALD = "ald";
 
     //CONVERSACION
-    public static String ID_CONVERSACION = "idConversacion";
+    public static String CONVERSACIONES =  "conversaciones";
+    public static String ID_U1 = "idU1";
+    public static String ID_U2 = "idU2";
     public static String NICK_EMISOR = "nickEmisor";
 
     //MENSAJE
