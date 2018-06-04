@@ -14,18 +14,15 @@ import com.example.jjsimon.proyectodam.Clases.Mensaje;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterMensajes;
 import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MDActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -33,6 +30,7 @@ public class MDActivity extends AppCompatActivity {
     private RecyclerViewAdapterMensajes adapter;
     private Button enviarBT;
     private EditText mensajeET;
+    //private Conversacion conversacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class MDActivity extends AppCompatActivity {
 
 
         //Cargar datos
-        cargarDatos();
+        consultarConversacion();
         //inicializarLista();
         //Añadir listener a la BD para los mensajes
         //anadirListener();
@@ -71,25 +69,21 @@ public class MDActivity extends AppCompatActivity {
 
     }
 
-    private void cargarDatos() {
-        Log.w("CONSULTA", "entro en cargar datos");
-        //Primero busco la conversacion
-        String idUuser = getIntent().getExtras().getString(ExtrasRef.ID_EMISOR);
-        Log.w("CONSULTA", idUuser);
-        String idDestinatario = getIntent().getExtras().getString(ExtrasRef.ID_DESTINATARIO);
-        //Log.w("CONSULTA", idUuser);
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.CONVERSACIONES);
-
-        Query query = reference.child(FireBaseReferences.ID_U1).orderByChild(idUuser);
-
-        //A la misma referencia 2 equalsTo añadiendo el mismo EventListener (Creo el objeto event listener para no duplicar codigo)
-        reference.orderByChild(FireBaseReferences.ID_U1).equalTo(idUuser).addChildEventListener(new ChildEventListener() {
+    /**
+     * Este metodo realiza una consulta a la base de datos para obtener la conversacion
+     */
+    private void consultarConversacion() {
+        final String idUuser = getIntent().getExtras().getString(ExtrasRef.ID_EMISOR);
+        final String idDestinatario = getIntent().getExtras().getString(ExtrasRef.ID_DESTINATARIO);
+        
+        ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Log.w("CONSULTA", "ADDED");
                 Conversacion c = dataSnapshot.getValue(Conversacion.class);
-                Log.w("CONSULTA", c.getIdConversacion());
+                if(idUuser.equals(c.getIdU1()) && idDestinatario.equals(c.getIdU2())
+                        || idUuser.equals(c.getIdU2()) && idDestinatario.equals(c.getIdU1()))
+                    recuperarMensajes(c);
             }
 
             @Override
@@ -111,8 +105,37 @@ public class MDActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
 
+        //Referencia de la base de datos apuntando al nodo conversaciones
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.CONVERSACIONES);
+        
+        //Realizo una consulta obteniendo
+        reference.orderByChild(FireBaseReferences.ID_U1).equalTo(idUuser).addChildEventListener(childEventListener);
+        reference.orderByChild(FireBaseReferences.ID_U2).equalTo(idUuser).addChildEventListener(childEventListener);
+
+    }
+
+
+    private void recuperarMensajes(Conversacion conversacion){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.MENSAJES);
+        reference.orderByChild(FireBaseReferences.ID_CONVERSACION).equalTo(conversacion.getIdConversacion()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.w("RECUPERAR_MSJ", ""+dataSnapshot.getChildrenCount());
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                    Mensaje mensaje = snapshot.getValue(Mensaje.class);
+                    Log.w("RECUPERAR_MSJ", ""+ mensaje.getCuerpoMensaje());
+                    mensajesList.add(mensaje);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void anadirListener() {

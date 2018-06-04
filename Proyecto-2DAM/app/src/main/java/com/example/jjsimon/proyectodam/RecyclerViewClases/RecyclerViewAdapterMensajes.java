@@ -1,6 +1,8 @@
 package com.example.jjsimon.proyectodam.RecyclerViewClases;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.Gravity;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.jjsimon.proyectodam.Clases.Mensaje;
 import com.example.jjsimon.proyectodam.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -34,8 +38,14 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
-        if(mensajesList.get(position).getTipoMensaje()==Mensaje.RECIBIDO)
-            holder.cuerpoMensajeTV.setGravity(Gravity.LEFT);
+        //
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(mensajesList.get(position).getIdEmisor().equals(user.getUid())) {
+            holder.cuerpoMensajeTV.setTextColor(Color.RED);
+            holder.cuerpoMensajeTV.setGravity(Gravity.RIGHT);
+            //holder.cuerpoMensajeTV;
+            //CardView c = new CardView();
+        }
 
 
 
