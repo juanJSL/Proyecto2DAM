@@ -22,10 +22,16 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<Mensaje> mensajesList;
 
     public RecyclerViewAdapterMensajes() {
+        mensajesList = new ArrayList<>();
     }
 
     public RecyclerViewAdapterMensajes(ArrayList<Mensaje> mensajesList) {
         this.mensajesList = mensajesList;
+    }
+
+    public void addMensaje(Mensaje mensaje){
+        mensajesList.add(mensaje);
+        notifyItemInserted(mensajesList.size());
     }
 
     @NonNull
@@ -41,8 +47,6 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
         //
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(mensajesList.get(position).getIdEmisor().equals(user.getUid())) {
-            holder.cuerpoMensajeTV.setTextColor(Color.RED);
-            holder.cuerpoMensajeTV.setGravity(Gravity.RIGHT);
             //holder.cuerpoMensajeTV;
             //CardView c = new CardView();
         }

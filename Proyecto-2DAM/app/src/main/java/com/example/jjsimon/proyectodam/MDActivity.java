@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 public class MDActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ArrayList<Mensaje> mensajesList;
+    //private ArrayList<Mensaje> mensajesList;
     private RecyclerViewAdapterMensajes adapter;
     private Button enviarBT;
     private EditText mensajeET;
-    //private Conversacion conversacion;
+    private Conversacion conversacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +40,20 @@ public class MDActivity extends AppCompatActivity {
         //Enlazo la recyclerView
         recyclerView = (RecyclerView) findViewById(R.id.mensajes_recycler);
 
-        mensajesList = new ArrayList<>();
+        //mensajesList = new ArrayList<>();
 
-        adapter = new RecyclerViewAdapterMensajes(mensajesList);
+        //adapter = new RecyclerViewAdapterMensajes(mensajesList);
+        adapter = new RecyclerViewAdapterMensajes();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-
-
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                anadirListener();
+            }
+        });
 
         //Cargar datos
         consultarConversacion();
@@ -63,7 +69,8 @@ public class MDActivity extends AppCompatActivity {
         enviarBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enviarMsj();
+                if(!mensajeET.getText().toString().equals(""))
+                    enviarMsj();
             }
         });
 
@@ -75,6 +82,8 @@ public class MDActivity extends AppCompatActivity {
     private void consultarConversacion() {
         final String idUuser = getIntent().getExtras().getString(ExtrasRef.ID_EMISOR);
         final String idDestinatario = getIntent().getExtras().getString(ExtrasRef.ID_DESTINATARIO);
+
+
         
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -82,8 +91,9 @@ public class MDActivity extends AppCompatActivity {
                 Log.w("CONSULTA", "ADDED");
                 Conversacion c = dataSnapshot.getValue(Conversacion.class);
                 if(idUuser.equals(c.getIdU1()) && idDestinatario.equals(c.getIdU2())
-                        || idUuser.equals(c.getIdU2()) && idDestinatario.equals(c.getIdU1()))
-                    recuperarMensajes(c);
+                        || idUuser.equals(c.getIdU2()) && idDestinatario.equals(c.getIdU1())) {
+                    recuperarMensajes((conversacion = c));
+                }
             }
 
             @Override
@@ -113,22 +123,32 @@ public class MDActivity extends AppCompatActivity {
         //Realizo una consulta obteniendo
         reference.orderByChild(FireBaseReferences.ID_U1).equalTo(idUuser).addChildEventListener(childEventListener);
         reference.orderByChild(FireBaseReferences.ID_U2).equalTo(idUuser).addChildEventListener(childEventListener);
+        //reference.orderByChild(FireBaseReferences.ID_U1).equalTo(idUuser).addListenerForSingleValueEvent(valueEventListener);
+        //reference.orderByChild(FireBaseReferences.ID_U2).equalTo(idUuser).addListenerForSingleValueEvent(valueEventListener);
 
     }
 
 
-    private void recuperarMensajes(Conversacion conversacion){
+    private void recuperarMensajes(final Conversacion conversacion){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.MENSAJES);
-        reference.orderByChild(FireBaseReferences.ID_CONVERSACION).equalTo(conversacion.getIdConversacion()).addValueEventListener(new ValueEventListener() {
+        reference.orderByChild(FireBaseReferences.FECHA).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.w("RECUPERAR_MSJ", ""+dataSnapshot.getChildrenCount());
+                //mensajesList.removeAll(mensajesList);
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
                     Mensaje mensaje = snapshot.getValue(Mensaje.class);
+                    Log.w("RECUPERAR_MSJ", ""+ mensaje.getIdConversacion());
+                    Log.w("RECUPERAR_MSJ", ""+ conversacion.getIdConversacion());
                     Log.w("RECUPERAR_MSJ", ""+ mensaje.getCuerpoMensaje());
-                    mensajesList.add(mensaje);
+                    Log.w("RECUPERAR_MSJ", ""+ mensaje.getIdEmisor());
+                    Log.w("RECUPERAR_MSJ", ""+ mensaje.getIdDestinatario());
+                    if(mensaje.getIdConversacion().equals(conversacion.getIdConversacion()))
+                        adapter.addMensaje(mensaje);
+                        //mensajesList.add(mensaje);
                 }
+                anadirListener();
                 adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -139,49 +159,34 @@ public class MDActivity extends AppCompatActivity {
     }
 
     private void anadirListener() {
+        int pos = adapter.getItemCount();
+        Log.w("posss", pos+"");
+        recyclerView.scrollToPosition(1);
     }
 
 
 
     private void enviarMsj() {
+        //Creo el objeto mensaje
         Mensaje mensaje = new Mensaje();
         mensaje.setCuerpoMensaje(mensajeET.getText().toString());
         mensaje.setIdEmisor(getIntent().getExtras().getString(ExtrasRef.ID_EMISOR));
         mensaje.setIdDestinatario(getIntent().getExtras().getString(ExtrasRef.ID_DESTINATARIO));
         mensaje.setFecha(ServerValue.TIMESTAMP.toString());
+        mensaje.setIdConversacion(conversacion.getIdConversacion());
 
+        //Guardo el mensaje en la BD
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.MENSAJES);
-
         reference = reference.push();
-
         mensaje.setIdMensaje(reference.getKey());
-
         reference.setValue(mensaje);
 
-        reference.child(FireBaseReferences.FECHA).setValue(ServerValue.TIMESTAMP);
-        mensajesList.add(mensaje);
+        //Añado la fecha
+        //reference.child(FireBaseReferences.FECHA).setValue(ServerValue.TIMESTAMP);
+        reference.child(FireBaseReferences.FECHA).setValue("4a");
+        adapter.addMensaje(mensaje);
+        //mensajesList.add(mensaje);
         adapter.notifyDataSetChanged();
         mensajeET.setText("");
     }
-
-
-
-    private void inicializarLista() {
-        Mensaje m1 = new Mensaje("id1", "conversacion", "Mensaje1", "fecha", "destinatario", "emisor", Mensaje.ENVIADO);
-        Mensaje m2 = new Mensaje("id2", "conversacion", "Mensaje2", "fecha", "destinatario", "emisor", Mensaje.ENVIADO);
-        Mensaje m3 = new Mensaje("id3", "conversacion", "Mensaje3", "fecha", "destinatario", "emisor", Mensaje.ENVIADO);
-        Mensaje m4 = new Mensaje("id4", "conversacion", "Mensaje4", "fecha", "destinatario", "emisor", Mensaje.ENVIADO);
-        Mensaje m5 = new Mensaje("id5", "conversacion", "Mensaje5", "fecha", "destinatario", "emisor", Mensaje.RECIBIDO);
-        Mensaje m6 = new Mensaje("id6", "conversacion", "Mensaje6", "fecha", "destinatario", "emisor", Mensaje.RECIBIDO);
-        Mensaje m7 = new Mensaje("id7", "conversacion", "Mensaje7", "fecha", "destinatario", "emisor", Mensaje.RECIBIDO);
-        Mensaje m8 = new Mensaje("id8", "conversacion", "Mensaje8", "fecha", "destinatario", "emisor", Mensaje.RECIBIDO);
-
-        Mensaje [] array = {m1, m2, m3, m4, m5, m6 ,m7 ,m8};
-
-        for (Mensaje conversacion: array) {
-            mensajesList.add(conversacion);
-        }
-    }
-
-
 }
