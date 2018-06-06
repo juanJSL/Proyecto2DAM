@@ -1,10 +1,14 @@
 package com.example.jjsimon.proyectodam.RecyclerViewClases;
 
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,7 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
 
     public void addMensaje(Mensaje mensaje){
         mensajesList.add(mensaje);
+        Log.w("scroll", mensajesList.size()+"");
         notifyItemInserted(mensajesList.size());
     }
 
@@ -42,14 +47,18 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
         return holder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
         //
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //Se debe aplicar estilo en ambos casos de lo contrario al hacer scroll coge el stilo de la card que esta reciclando
         if(mensajesList.get(position).getIdEmisor().equals(user.getUid())) {
-            //holder.cuerpoMensajeTV;
+            holder.cuerpoMensajeTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            holder.cuerpoMensajeTV.setTextColor(Color.RED);
             //CardView c = new CardView();
-        }
+        }else
+            holder.cuerpoMensajeTV.setTextColor(Color.BLUE);
 
 
 

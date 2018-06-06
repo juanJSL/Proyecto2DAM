@@ -11,7 +11,7 @@ public class Mensaje {
     private String idMensaje;
     private String idConversacion;
     private String cuerpoMensaje;
-    private String fecha;
+    private long fecha;
     private String idDestinatario;
     private String idEmisor;
     private int tipoMensaje;
@@ -19,7 +19,7 @@ public class Mensaje {
     public Mensaje() {
     }
 
-    public Mensaje(String idMensaje, String idConversacion, String cuerpoMensaje, String fecha, String idDestinatario, String idEmisor, int tipoMensaje) {
+    public Mensaje(String idMensaje, String idConversacion, String cuerpoMensaje, long fecha, String idDestinatario, String idEmisor, int tipoMensaje) {
         this.idMensaje = idMensaje;
         this.idConversacion = idConversacion;
         this.cuerpoMensaje = cuerpoMensaje;
@@ -53,11 +53,11 @@ public class Mensaje {
         this.cuerpoMensaje = cuerpoMensaje;
     }
 
-    public String getFecha() {
+    public long getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(long fecha) {
         this.fecha = fecha;
     }
 
