@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,9 +97,13 @@ public class MDActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Mensaje mensaje = dataSnapshot.getValue(Mensaje.class);
+                if(mensaje.getIdDestinatario().equals(idEmisor))
+                    Log.w("prueba", "Mensaje recibido, crear servicio");
+
                 if(mensaje.getIdEmisor().equals(idEmisor) && mensaje.getIdDestinatario().equals(idDestinatario)
-                        || mensaje.getIdEmisor().equals(idDestinatario) && mensaje.getIdDestinatario().equals(idEmisor))
+                        || mensaje.getIdEmisor().equals(idDestinatario) && mensaje.getIdDestinatario().equals(idEmisor)) {
                     adapter.addMensaje(mensaje);
+                }
             }
 
             @Override

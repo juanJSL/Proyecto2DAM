@@ -54,11 +54,14 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Se debe aplicar estilo en ambos casos de lo contrario al hacer scroll coge el stilo de la card que esta reciclando
         if(mensajesList.get(position).getIdEmisor().equals(user.getUid())) {
-            holder.cuerpoMensajeTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            holder.cuerpoMensajeTV.setTextColor(Color.RED);
-            //CardView c = new CardView();
-        }else
-            holder.cuerpoMensajeTV.setTextColor(Color.BLUE);
+            //holder.cuerpoMensajeTV.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+            holder.cardView.setBackgroundColor(Color.rgb( 186,247,138));
+            //holder.cuerpoMensajeTV.setTextColor(Color.RED);
+        }else {
+            //holder.cuerpoMensajeTV.setTextColor(Color.BLUE);
+            //holder.cuerpoMensajeTV.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            holder.cardView.setBackgroundColor(Color.rgb( 138,189,247));
+        }
 
 
 
@@ -77,12 +80,14 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
      */
     public class MensajesViewHolder extends RecyclerView.ViewHolder{
         private TextView cuerpoMensajeTV;
+        private CardView cardView;
         private String idConversacion;
         private int tipoMensaje;
 
         public MensajesViewHolder(View itemView) {
             super(itemView);
             cuerpoMensajeTV = (TextView) itemView.findViewById(R.id.mensaje_TV);
+            cardView = (CardView) itemView.findViewById(R.id.card_emisor);
         }
     }//FIN DEL VIEW HOLDER
 }

@@ -41,7 +41,11 @@
             android:label="@string/title_activity_pantalla_ubicacion_equipo" />
         <activity android:name=".ActivityEquipo" />
         <activity android:name=".MDActivity" />
-        <activity android:name=".JugadorActivity"></activity>
+        <activity android:name=".JugadorActivity" />
+
+        <service
+            android:name=".ServicioNotificacionesChat"
+            android:exported="false"></service>
     </application>
 
 </manifest>
