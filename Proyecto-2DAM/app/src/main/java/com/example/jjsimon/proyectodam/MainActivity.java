@@ -67,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.cerrar_sesion)
+        if(item.getItemId() == R.id.cerrar_sesion) {
+            finish();
             FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, PantallaLogin.class));
+        }else if(item.getItemId() == R.id.crear_equipo){
+            startActivity(new Intent(this, CrearEquipo.class));
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -291,5 +297,13 @@ public class MainActivity extends AppCompatActivity {
 
         //startService(new Intent(this, ServicioNotificacionesChat.class));
         stopService(servicio);
+    }
+
+
+    /**
+     * Se supone que con esto puedo actualizar el fragment de la pestaña equipo
+     */
+    public void actualizar(){
+        viewPager.getAdapter().notifyDataSetChanged();
     }
 }
