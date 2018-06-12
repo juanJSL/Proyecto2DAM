@@ -37,28 +37,36 @@ public class PantallaLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_login);
 
+        //comprobarLogin();
+
         //Compruebo si el usuario esta logueado si no esta logueado abro la pantalla de login
-        if(isLogueado()){
+        /*if(isLogueado()){
            Log.w("PREFERENCIAS", "Abro pantalla login");
           startActivity(new Intent(this, MainActivity.class));
         }else
            Log.w("PREFERENCIAS", "El usuario no esta logueado");
-
+*/
         //Inicializo los componentes
         mailET = (EditText) findViewById(R.id.mail_et_wlog);
         pwdET = (EditText) findViewById(R.id.pwd_et_wlog);
         loginBT = (Button) findViewById(R.id.entrar_bt_wlog);
         crearCuenta = (TextView) findViewById(R.id.crearCuenta_tv_wlog);
 
-        //Instancio el Listener
+        /**
+         *Instancio el listener para comprobar si el usuario ya ha iniciado sesion
+         * en el caso de que haya iniciado sesion lanzo la actividad principal
+         */
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user!=null)
-                    Log.w("SESION", "El usuario a iniciado sesion" + user.getEmail());
-                else
-                    Log.w("SESION", "El usuario a cerrado la sesion");
+                if(user!=null) {
+                    Log.w("SESION", "El usuario a iniciado sesion " + user.getEmail());
+                    finish();
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                }else {
+                    Log.w("SESION", "El usuario a cerrado la sesion ");
+                }
             }
         };
 
@@ -94,26 +102,22 @@ public class PantallaLogin extends AppCompatActivity {
     }
 
     /**
-     *Este metodo se encarga de iniciar sesion en firebase, ademas de cambiar la preferencia de logueado a true
+     *Este metodo se encarga de iniciar sesion en firebase,
      *es llamado cuando se pulsa el boton de iniciar sesion
      */
     public void iniciarSesion(){
         String mail = mailET.getText()+"";
         String pwd = pwdET.getText()+"";
 
+
         auth.signInWithEmailAndPassword(mail, pwd)
         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
                 //En caso de que se haya podido iniciar sesion se muestra un toast informando al usuario, se cambia la preferencia y se finaliza la activvidad
                 if (task.isSuccessful()) {
                     Toast.makeText(PantallaLogin.this, "Sesion iniciada", Toast.LENGTH_LONG).show();
                     //Creo el editor para las preferencias
-                    SharedPreferences.Editor editor = getSharedPreferences(PreferenciasReference.PREFERENCIAS, Context.MODE_PRIVATE).edit();
-                    //Edito la preferencia
-                    editor.putBoolean(PreferenciasReference.LOGUEADO, true);
-                    editor.commit();
                     startActivity(new Intent(PantallaLogin.this, MainActivity.class));
                     finish();
                     Log.w("SESION", "Sesion iniciada");
@@ -125,15 +129,6 @@ public class PantallaLogin extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    /**
-     * Este metodo comprueba si el usuario esta logueado en firebase o no
-     * @return true-> Si está logueado false-> Si no está logueado
-     */
-    public boolean isLogueado(){
-        return getSharedPreferences(PreferenciasReference.PREFERENCIAS, Context.MODE_PRIVATE).getBoolean(PreferenciasReference.LOGUEADO, false);
     }
 }
 

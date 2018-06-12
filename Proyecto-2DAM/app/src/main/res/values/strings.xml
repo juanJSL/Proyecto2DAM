@@ -64,6 +64,11 @@
     <string name="mail">E-mail</string>
 
 
+    <!--MENU-->
+    <string name="cerrar_sesion_menu">Cerrar Sesion</string>
+    <string name="crear_equipo_menu">Crear un equipo</string>
+
+
 
 
 </resources>

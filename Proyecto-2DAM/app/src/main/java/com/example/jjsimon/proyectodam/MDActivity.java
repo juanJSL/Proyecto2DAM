@@ -149,8 +149,16 @@ public class MDActivity extends AppCompatActivity {
         //Añado la fecha
         reference.child(FireBaseReferences.FECHA).setValue(ServerValue.TIMESTAMP);
 
+        //Guardo la conversacion
+        //guardarConversacion();
+
         //Limpio el editText
         mensajeET.setText("");
+    }
+
+    private void guardarConversacion(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.CONVERSACIONES);
+        //reference.or
     }
 
 }

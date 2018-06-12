@@ -3,12 +3,15 @@ package com.example.jjsimon.proyectodam;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 import com.example.jjsimon.proyectodam.Adaptadores.ViewPagerAdapter;
@@ -39,14 +42,35 @@ public class MainActivity extends AppCompatActivity {
 
     private  ViewPagerAdapter adapter;
 
+    private Intent servicio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         comprobarEquipo();
+        //Iniciar servicio
+        //startService(new Intent(this, ServicioNotificacionesChat.class));
+        servicio = new Intent(this, ServicioNotificaciones.class);
+        startService(servicio);
     }
 
+    /**
+     * Este metodo se encarga de inflar el menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.cerrar_sesion)
+            FirebaseAuth.getInstance().signOut();
+        return super.onOptionsItemSelected(item);
+    }
 
     private void inicializarViewPager(){
         //Inicializo el ViewPager
@@ -259,4 +283,13 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.w("SERVICIO", "main onDestroy");
+
+        //startService(new Intent(this, ServicioNotificacionesChat.class));
+        stopService(servicio);
+    }
 }
