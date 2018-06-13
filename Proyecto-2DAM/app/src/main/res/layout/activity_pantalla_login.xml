@@ -52,14 +52,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/entrar_bt_wlog" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/crear_cuenta_tv_wlog"
-        tools:layout_editor_absoluteX="507dp"
-        tools:layout_editor_absoluteY="187dp"
-        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/mail_et_wlog"

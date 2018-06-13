@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.jjsimon.proyectodam.Clases.Conversacion;
+import com.example.jjsimon.proyectodam.Clases.Conversacion2;
 import com.example.jjsimon.proyectodam.Clases.Mensaje;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterMensajes;
@@ -19,10 +20,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MDActivity extends AppCompatActivity {
 
@@ -88,6 +88,9 @@ public class MDActivity extends AppCompatActivity {
 
         //Realizo una consulta a la BD para recuperar los mensajes almacenados en la BD
         recuperarMensajes();
+
+        //Consulto la conversacion
+        comprobarConversacion2();
     }
 
 
@@ -160,5 +163,96 @@ public class MDActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.CONVERSACIONES);
         //reference.or
     }
+
+
+    /**
+     * Comprueba que el usuario tiene una conversacion abierta con el destinatario sino la crea
+     */
+    private void comprobarConversacion2(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("conversaciones2");
+        Query query = reference.orderByChild("idEmisor").equalTo(idEmisor);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+               boolean existeConversacion=false;
+                for (DataSnapshot conversacion:dataSnapshot.getChildren()) {
+                   Conversacion2 c = conversacion.getValue(Conversacion2.class);
+                   if(c.isTieneMensajes())
+                       Log.w("Comprobar MENSAJES", "Tiene mensajes" );
+                   else
+                       Log.w("Comprobar MENSAJES", "No tiene mensajes" );
+                   if(c.getIdDestinatario().equals(idDestinatario)) {
+                       Log.w("CONVERSACION", "" + c.getIdConversacion());
+                       existeConversacion = true;
+                   }
+                }
+                if(existeConversacion){
+                    Log.w("CONVERSACION", "Exite una conversacion en el emisor");
+                    comprobarConversacionDestinatario();
+                }else{
+                    Log.w("CONVERSACION", "No exite una conversacion en el emisor");
+                    crearConversacion(idEmisor, idDestinatario);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    /**
+     * Comprueba que el destinatario tiene tambien una conversacion con este usuario si no la crea
+     */
+    private void comprobarConversacionDestinatario() {
+        Log.w("CONVERSACION", "Comprobar conversacion destinatario");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("conversaciones2");
+        Query query = reference.orderByChild("idEmisor").equalTo(idDestinatario);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                boolean existeConversacion=false;
+                for (DataSnapshot conversacion:dataSnapshot.getChildren()) {
+                    Conversacion2 c = conversacion.getValue(Conversacion2.class);
+                    if(c.getIdDestinatario().equals(idEmisor)) {
+                        existeConversacion = true;
+                    }
+                }
+                if(existeConversacion){
+                    Log.w("CONVERSACION", "Exite una conversacion en el destinatario");
+                }else{
+                    Log.w("CONVERSACION", "No exite una conversacion en el destinatario");
+                    crearConversacion(idDestinatario, idEmisor);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /**
+     * Este metodo se encarga de crear una conversacion en la BD
+     * @param emisor
+     * @param destinatario
+     */
+    private void crearConversacion(String emisor, String destinatario) {
+        Conversacion2 conversacion2 = new Conversacion2();
+        //Guardo la conversacion en la BD
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("conversaciones2");
+        reference = reference.push();
+        conversacion2.setIdConversacion(reference.getKey());
+        conversacion2.setIdEmisor(emisor);
+        conversacion2.setIdDestinatario(destinatario);
+        reference.setValue(conversacion2);
+    }
+
+
 
 }
