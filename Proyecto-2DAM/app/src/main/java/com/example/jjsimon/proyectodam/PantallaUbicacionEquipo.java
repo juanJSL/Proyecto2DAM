@@ -152,11 +152,4 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
         builder.create().show();
     }//FIN CREAR DIALOG
 
-
-
-
-
-
-
-
 }

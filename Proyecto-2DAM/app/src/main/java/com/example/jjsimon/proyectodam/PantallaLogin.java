@@ -31,6 +31,7 @@ public class PantallaLogin extends AppCompatActivity {
 
     //Componentes FireBAse
     FirebaseAuth auth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +39,23 @@ public class PantallaLogin extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Inicializo los componentes
+        //Inicializo los componentes
         mailET = (EditText) findViewById(R.id.mail_et_wlog);
         pwdET = (EditText) findViewById(R.id.pwd_et_wlog);
         loginBT = (Button) findViewById(R.id.entrar_bt_wlog);
         crearCuenta = (TextView) findViewById(R.id.crearCuenta_tv_wlog);
 
+        //Instancia de FirebaseAuth
         auth = FirebaseAuth.getInstance();
-        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user!=null) {
-                    Log.w("SESION", "El usuario a iniciado sesion " + user.getEmail());
-                    finish();
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
-                }else {
-                    Log.w("SESION", "El usuario a cerrado la sesion ");
-                }
-            }
-        });
+        //Obtengo el usuario actual
+        user = auth.getCurrentUser();
 
+        /*Compruebo si el usuario actual es distinto de null, en caso de serlo
+        inicio la pantalla principal de la aplicacion y finalizo esta actividad*/
+        if(user!=null) {
+            finish();
+            startActivity(new Intent(getBaseContext(), MainActivity.class));
+        }
 
         //Añado el OnClick al texto de crear cuenta
         crearCuenta.setOnClickListener( new View.OnClickListener() {
@@ -111,8 +109,7 @@ public class PantallaLogin extends AppCompatActivity {
         String pwd = pwdET.getText()+"";
 
 
-        auth.signInWithEmailAndPassword(mail, pwd)
-        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(mail, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //En caso de que se haya podido iniciar sesion se muestra un toast informando al usuario, se cambia la preferencia y se finaliza la activvidad
@@ -128,6 +125,9 @@ public class PantallaLogin extends AppCompatActivity {
             }
         });
     }
+
 }
+
+
 
 

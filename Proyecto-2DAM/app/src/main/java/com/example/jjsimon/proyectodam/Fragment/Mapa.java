@@ -59,7 +59,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         return rootView;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onMapReady(GoogleMap map) {
 
@@ -81,7 +81,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
     private void consultarEquipos(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child(FireBaseReferences.EQUIPOS).addListenerForSingleValueEvent(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Recorro el resultado de la consulta
@@ -104,7 +104,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
      * Este metido se encarga de poner un marcador en el mapa con los datos del equipo
      * @param equipo Objeto del tipo equipo con los datos obtenidos de la BD
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void ponerMarcador(Equipo equipo){
 
         //Obtengo la ubicacion del objeto equipo
@@ -116,7 +116,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         text.setText(equipo.getNombre());
         IconGenerator generator = new IconGenerator(getContext());
 
-        generator.setBackground(getContext().getDrawable(R.drawable.amu_bubble_mask));
+        generator.setBackground(getResources().getDrawable(R.drawable.amu_bubble_mask));
         generator.setContentView(text);
         generator.setColor(Color.WHITE);
         Bitmap icon = generator.makeIcon();

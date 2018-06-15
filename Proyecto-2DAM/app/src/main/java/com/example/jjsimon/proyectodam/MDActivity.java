@@ -144,14 +144,14 @@ public class MDActivity extends AppCompatActivity {
         //mensaje.setFecha(Long.parseLong(ServerValue.TIMESTAMP.toString()));
         //mensaje.setIdConversacion(conversacion.getIdConversacion());
 
-        //Guardo el mensaje en la BD
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.MENSAJES);
-        reference = reference.push();
-        mensaje.setIdMensaje(reference.getKey());
-        reference.setValue(mensaje);
+    //Guardo el mensaje en la BD
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.MENSAJES);
+    reference = reference.push();
+    mensaje.setIdMensaje(reference.getKey());
+    reference.setValue(mensaje);
 
-        //Añado la fecha
-        reference.child(FireBaseReferences.FECHA).setValue(ServerValue.TIMESTAMP);
+    //Añado la fecha
+    reference.child(FireBaseReferences.FECHA).setValue(ServerValue.TIMESTAMP);
 
         //Guardo la conversacion
         //guardarConversacion();

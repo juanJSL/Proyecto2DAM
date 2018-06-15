@@ -47,7 +47,7 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
         return holder;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
         //
