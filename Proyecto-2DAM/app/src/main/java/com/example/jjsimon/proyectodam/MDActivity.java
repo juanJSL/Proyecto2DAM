@@ -1,5 +1,6 @@
 package com.example.jjsimon.proyectodam;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -252,7 +253,5 @@ public class MDActivity extends AppCompatActivity {
         conversacion2.setIdDestinatario(destinatario);
         reference.setValue(conversacion2);
     }
-
-
 
 }

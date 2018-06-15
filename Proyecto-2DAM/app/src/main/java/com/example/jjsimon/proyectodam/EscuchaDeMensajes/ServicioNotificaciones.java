@@ -1,4 +1,4 @@
-package com.example.jjsimon.proyectodam;
+package com.example.jjsimon.proyectodam.EscuchaDeMensajes;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,6 +13,8 @@ import android.util.Log;
 import com.example.jjsimon.proyectodam.Clases.Mensaje;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.Fragment.Chat;
+import com.example.jjsimon.proyectodam.MainActivity;
+import com.example.jjsimon.proyectodam.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;

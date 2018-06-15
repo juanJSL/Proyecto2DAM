@@ -1,4 +1,4 @@
-package com.example.jjsimon.proyectodam;
+package com.example.jjsimon.proyectodam.EscuchaDeMensajes;
 
 import android.app.IntentService;
 import android.content.Intent;

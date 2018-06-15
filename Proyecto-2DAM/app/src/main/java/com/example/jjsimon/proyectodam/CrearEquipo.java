@@ -1,28 +1,20 @@
 package com.example.jjsimon.proyectodam;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.jjsimon.proyectodam.Clases.Equipo;
-import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
-import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class CrearEquipo extends AppCompatActivity {
     private int PANTALLA_UBICACION_EQUIPO = 1;
@@ -34,7 +26,7 @@ public class CrearEquipo extends AppCompatActivity {
     private EditText descripcionEquipo;
 
     //Variable para guardar la ubicacion
-    private String ubicacion;
+    private String ubicacion="";
 
     //Variable para guardar los datos que se almacenaran en la BD;
     private Equipo equipo;
@@ -78,7 +70,24 @@ public class CrearEquipo extends AppCompatActivity {
         aceptarBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarEquipo();
+                if(!nombreEquipo.getText().toString().equals("") && !ubicacion.equals("")
+                        && !descripcionEquipo.getText().toString().equals("")) {
+                    guardarEquipo();
+                }else{
+                    //Si no se han completado muestro un dialogo para indicar que faltan campos
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CrearEquipo.this);
+
+                    builder.setTitle(R.string.faltan_campos_titulo)
+                            .setMessage(R.string.faltan_campos_msj)
+                            .setPositiveButton(R.string.aceptar,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    builder.create().show();
+                }
             }
         });
     }

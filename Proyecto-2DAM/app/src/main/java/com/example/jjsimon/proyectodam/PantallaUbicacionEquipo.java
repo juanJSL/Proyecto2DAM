@@ -38,7 +38,7 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_ubicacion_equipo);
+        setContentView(R.layout.activity_ubicacion_equipo);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }

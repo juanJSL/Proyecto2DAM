@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Esta clase que extiende FragmentPagerAdapter será la que
+ */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     List<Fragment> fragmentList = new ArrayList<>();
@@ -16,7 +19,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-    //Metodo que devuelce el fragment de la posicion que recibe como parametro
+    //Metodo que devuelve el fragment de la posicion que recibe como parametro
     @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);
@@ -37,19 +40,5 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment){
         fragmentList.add(fragment);
     }
-
-    //Metodo para añadir un fragment en una posicion reemplazando el que existe
-    public void addFragmentAtPosition(Fragment fragment, int position){
-        fragmentList.remove(position);
-        fragmentList.add(position, fragment);
-    }
-
-    //Metodo que permite limpiar la lista
-    public void cleanLista(){
-        for (int i=0; i<fragmentList.size(); i++){
-            fragmentList.remove(i);
-        }
-    }
-
 
 }

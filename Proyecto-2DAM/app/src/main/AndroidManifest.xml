@@ -44,15 +44,15 @@
         <activity android:name=".JugadorActivity" />
 
         <service
-            android:name=".ServicioNotificacionesChat"
+            android:name=".EscuchaDeMensajes.ServicioNotificacionesChat"
             android:exported="false" />
         <service
-            android:name=".ServicioNotificaciones"
+            android:name=".EscuchaDeMensajes.ServicioNotificaciones"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".BroadcastServicioParado"
+            android:name=".EscuchaDeMensajes.BroadcastServicioParado"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

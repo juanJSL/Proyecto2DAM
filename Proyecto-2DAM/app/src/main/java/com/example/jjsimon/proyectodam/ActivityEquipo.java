@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -59,43 +60,23 @@ public class ActivityEquipo extends AppCompatActivity {
         //Indico el tipo de layout que va a utilizar la recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        consultarJugadores(idEquipo);
+        consultarJugadores();
     }
 
-    /**
-     * Este metodo realiza una consulta a la base de datos y rellena la lista de jugadores
-     * con la que se cargaran las CardView
-     */
-    private void inicializarLista() {
 
-        consultarJugadores(getIntent().getExtras().getString(ExtrasRef.ID_EQUIPO));
-        //Jugadores de prueba despues se debe sustituir por una consulta a la BD
-        /*Jugador j1 = new Jugador("Juan Javier", "Jota", "Fusilero");
-        Jugador j2 = new Jugador("Antonio", "Liria", "Fuslier");
-        Jugador j3 = new Jugador("Jose Luis", "Kiles", "Sniper");
-        Jugador j4 = new Jugador("Gabi", "Gabi", "Sniper/Fusilero/Apollo");
-        Jugador j5 = new Jugador("Jose Ramon", "Rizos", "Fusilero/Apollo");
+    private void consultarJugadores(){
+        //Referencia a la BD en el nodo JUGADORES
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
 
-        jugadorList.add(j1);
-        jugadorList.add(j2);
-        jugadorList.add(j3);
-        jugadorList.add(j4);
-        jugadorList.add(j5);*/
-    }//Fin inicializar lista
-
-
-    private void consultarJugadores(final String idEquipo){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child(FireBaseReferences.JUGADORES).addValueEventListener(new ValueEventListener() {
+        Query query = reference.orderByChild(FireBaseReferences.ID_EQUIPO).equalTo(idEquipo);
+        //Busco dentro de los nodos jugadores los que tengan el id del equipo actual
+        query.addValueEventListener(new ValueEventListener()  {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 jugadorList.removeAll(jugadorList);
-                Log.w("NUEVOUSU", idEquipo);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Jugador jugador = snapshot.getValue(Jugador.class);
-                    if(jugador.getIdEquipo()!=null && jugador.getIdEquipo().equals(idEquipo)){
-                            jugadorList.add(jugador);
-                    }
+                    jugadorList.add(jugador);
                 }
                 recyclerViewAdapterJugador.notifyDataSetChanged();
             }
@@ -105,6 +86,6 @@ public class ActivityEquipo extends AppCompatActivity {
 
             }
         });
-    }
+    }//FIN CONSULTAR JUGADORES
 
 }

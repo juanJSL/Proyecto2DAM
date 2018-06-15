@@ -1,9 +1,8 @@
-package com.example.jjsimon.proyectodam;
+package com.example.jjsimon.proyectodam.EscuchaDeMensajes;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * Esta clase me permite iniciar de nuevo el servicio de notificaciones si ha sido detenido

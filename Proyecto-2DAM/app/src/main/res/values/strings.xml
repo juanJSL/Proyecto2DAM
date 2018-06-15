@@ -35,12 +35,16 @@
     <string name="error_mail_no_valido">El email introducido no es valido</string>
     <string name="error_registro_no_completado">Error al completar el registrelo intentelo mas tarde</string>
     <string name="error_pwd_corta">La contraseña debe tener al menos 4 caracteres</string>
+    <string name="ya_tienes_equipo">Ya perteneces a un equipo</string>
+
     <!-- OK -->
     <string name="ok_registro_completado">Registro Completado</string>
 
 
-    <!--FRAGMENT PESTAÑA SIN EQUIPO-->
-    <string name="crear_equipo">Crear un equipo ahora</string>
+    <!--FRAGMENT PESTAÑA EQUIPO-->
+    <string name="mensaje_sin_equipo">Aun no te has unido a un equipo, si quieres puedes buscar uno en la pestaña de mapa, o crear tu propio equipo desde la opcion Crear equipo del menu</string>
+    <string name="dejar_equipo">DEJAR EL EQUIPO</string>
+    <string name="unirse_equipo">UNIRSE AL EQUIPO</string>
 
     <!--AVTIVIDAD CREAR EQUIPO-->
     <string name="nombre_equipo">Nombre del equipo</string>
@@ -48,9 +52,15 @@
     <string name="ubicacion_bt">¿Donde se encuentra tu equipo?</string>
     <string name="title_activity_pantalla_ubicacion_equipo">Map</string>
 
-    <!--ACTIVIDAD UBICACION EQUIPO-->
+    <!--DIALOGOS-->
     <string name="wubicequip_tilte_conf_dialog">Ubicacion</string>
     <string name="wubicequip_msj_dialog">¿Deseas utilizar esta ubicación para tu equipo?</string>
+    <string name="dejar_equipo_titulo">Vas a abandonar el equipo</string>
+    <string name="dejar_equipo_msj">¿Estás seguro de que deseas dejar el equipo?</string>
+    <string name="faltan_campos_msj">Debes rellenar todos los campos antes de continuar</string>
+    <string name="faltan_campos_titulo">Error de formulario</string>
+
+
 
     <!--ACTIVIDAD JUGADOR-->
     <string name="enviar_privado">Enviar mensaje privado</string>

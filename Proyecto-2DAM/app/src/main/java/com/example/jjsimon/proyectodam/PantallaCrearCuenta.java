@@ -38,7 +38,7 @@ public class PantallaCrearCuenta extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_crear_cuenta);
+        setContentView(R.layout.activity_crear_cuenta);
 
 
         //Inicializo los componentes
