@@ -54,7 +54,7 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(initLocation,1));
         obtenerUbicacion();
 
-        //Añado la funcionalidad en el caso de pulsar de panera prolongada en un punto
+        //Añado la funcionalidad en el caso de pulsar de manera prolongada en un punto
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -125,7 +125,6 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
 
 
     public void crearDialog(){
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(R.string.wubicequip_tilte_conf_dialog)

@@ -39,7 +39,7 @@
         <activity
             android:name=".PantallaUbicacionEquipo"
             android:label="@string/title_activity_pantalla_ubicacion_equipo" />
-        <activity android:name=".ActivityEquipo" />
+        <activity android:name=".PantallaEquipo" />
         <activity android:name=".MDActivity" />
         <activity android:name=".JugadorActivity" />
 

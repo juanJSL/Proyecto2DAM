@@ -108,11 +108,11 @@ public class PantallaLogin extends AppCompatActivity {
         String mail = mailET.getText()+"";
         String pwd = pwdET.getText()+"";
 
-
         auth.signInWithEmailAndPassword(mail, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                //En caso de que se haya podido iniciar sesion se muestra un toast informando al usuario, se cambia la preferencia y se finaliza la activvidad
+                //En caso de que se haya podido iniciar sesion se muestra un toast informando al
+                //usuario, se cambia la preferencia y se finaliza la activvidad
                 if (task.isSuccessful()) {
                     Toast.makeText(PantallaLogin.this, "Sesion iniciada", Toast.LENGTH_LONG).show();
                     //Creo el editor para las preferencias
@@ -120,7 +120,9 @@ public class PantallaLogin extends AppCompatActivity {
                     finish();
                 //En caso de no poder iniciar sesion se muestra un toast informando al usuario
                 }else {
-                    Toast.makeText(PantallaLogin.this, "No se ha podido iniciar sesion, intentelo mas tarde", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PantallaLogin.this,
+                            "No se ha podido iniciar sesion, intentelo mas tarde",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

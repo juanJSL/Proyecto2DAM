@@ -56,7 +56,6 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         //Tambien los de Firebase
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         btCrearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +134,6 @@ public class PantallaCrearCuenta extends AppCompatActivity {
      * del usuario
      */
     public void iniciarRegistro() {
-        Log.w("INICIAR REGISTRO", "LLAMADO");
         final String correoStr = mailET.getText() + "";
         final String pwdStr = pwdET.getText() + "";
 
@@ -144,18 +142,20 @@ public class PantallaCrearCuenta extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(PantallaCrearCuenta.this, R.string.ok_registro_completado, Toast.LENGTH_LONG).show();
-
+                            Toast.makeText(PantallaCrearCuenta.this,
+                                    R.string.ok_registro_completado,
+                                    Toast.LENGTH_LONG).show();
                             //Guardo el usuario en la base de datos
                             guardarUser(firebaseAuth.getCurrentUser().getUid(), correoStr);
 
                             //Antes de cerrar la actividad inicio sesion con el usuario recien creado
                             firebaseAuth.signInWithEmailAndPassword(correoStr, pwdStr);
-                            Log.w("CONEXION", "antessss       "+FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             startActivity(new Intent(PantallaCrearCuenta.this, MainActivity.class));
                             finish();
                         }else {
-                            Toast.makeText(PantallaCrearCuenta.this, R.string.error_registro_no_completado, Toast.LENGTH_LONG).show();
+                            Toast.makeText(PantallaCrearCuenta.this,
+                                    R.string.error_registro_no_completado,
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                 });

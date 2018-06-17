@@ -1,12 +1,8 @@
 package com.example.jjsimon.proyectodam.Clases;
 
 public class Mensaje {
-
-    public static int ENVIADO = 0;
-    public static int RECIBIDO = 1;
-    public static int ENVIO_SOLICITUD = 2;
-    public static int RESPUESTA_SOLICITUD = 3;
-
+    public static int ENVIO_SOLICITUD = 0;
+    public static int MENSAJE = 1;
 
     private String idMensaje;
     private String idConversacion;

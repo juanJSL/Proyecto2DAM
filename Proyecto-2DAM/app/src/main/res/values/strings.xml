@@ -57,6 +57,8 @@
     <string name="wubicequip_msj_dialog">¿Deseas utilizar esta ubicación para tu equipo?</string>
     <string name="dejar_equipo_titulo">Vas a abandonar el equipo</string>
     <string name="dejar_equipo_msj">¿Estás seguro de que deseas dejar el equipo?</string>
+    <string name="unirse_equipo_titulo">Vas a unirte a un equipo</string>
+    <string name="unirse_equipo_msj">¿Estás seguro de que queres unirte a este equipo?</string>
     <string name="faltan_campos_msj">Debes rellenar todos los campos antes de continuar</string>
     <string name="faltan_campos_titulo">Error de formulario</string>
 

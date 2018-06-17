@@ -1,17 +1,24 @@
 package com.example.jjsimon.proyectodam;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterJugador;
 import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,11 +28,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ActivityEquipo extends AppCompatActivity {
+public class PantallaEquipo extends AppCompatActivity {
+    private final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
     private Equipo equipo;
     private String idEquipo;
     private Jugador jugador;
 
+    private Button unirseEquipoBT;
     private TextView nombreEquipoTV;
 
     private ArrayList<Jugador> jugadorList;
@@ -39,14 +48,27 @@ public class ActivityEquipo extends AppCompatActivity {
 
         String nombreEquipo = getIntent().getExtras().getString(ExtrasRef.NOMBRE_EQUIPO);
 
+        consultarUsuario();
+
         //Enlazo las view
-        this.nombreEquipoTV = (TextView) findViewById(R.id.equipo_nombreTV);
+        unirseEquipoBT = (Button) findViewById(R.id.unirse_equipo_bt);
+        nombreEquipoTV = (TextView) findViewById(R.id.equipo_nombreTV);
         nombreEquipoTV.setText(getIntent().getExtras().getString(ExtrasRef.NOMBRE_EQUIPO));
         idEquipo = getIntent().getExtras().getString(ExtrasRef.ID_EQUIPO);
 
+        //Añado el evento onClick para el boton
+        unirseEquipoBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(jugador.getIdEquipo()==null)
+                    unirseEquipo();
+                else
+                    Toast.makeText(getBaseContext(), R.string.ya_tienes_equipo, Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         jugadorList  = new ArrayList<>();
-
 
         //Inicializo la RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.equipo_Recycler);
@@ -61,6 +83,20 @@ public class ActivityEquipo extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         consultarJugadores();
+    }
+
+    private void consultarUsuario() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        reference.child(USER.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                jugador = dataSnapshot.getValue(Jugador.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
 
@@ -87,5 +123,33 @@ public class ActivityEquipo extends AppCompatActivity {
             }
         });
     }//FIN CONSULTAR JUGADORES
+
+    /**
+     * Este metodo cambia el nodo idEquipo a un usuario
+     */
+    private void unirseEquipo() {
+        //Creo un mensaje de confirmacion
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.unirse_equipo_titulo)
+                .setMessage(R.string.unirse_equipo_msj)
+                .setPositiveButton(R.string.si,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Si el usuario hace click en si borro el equipo
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES).child(USER.getUid());
+                                reference.child(FireBaseReferences.ID_EQUIPO).setValue(idEquipo);
+                            }
+                        })
+                .setNegativeButton(R.string.cancelar,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.w("DIALOGO", "CANCELAR");
+                            }
+                        });
+        builder.create().show();
+    }
 
 }

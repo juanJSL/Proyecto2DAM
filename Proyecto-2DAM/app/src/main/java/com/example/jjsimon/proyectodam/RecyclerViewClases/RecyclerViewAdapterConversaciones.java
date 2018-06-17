@@ -12,8 +12,16 @@ import android.widget.TextView;
 
 import com.example.jjsimon.proyectodam.Clases.Conversacion;
 import com.example.jjsimon.proyectodam.Clases.Jugador;
+import com.example.jjsimon.proyectodam.Clases.Mensaje;
+import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.MDActivity;
 import com.example.jjsimon.proyectodam.R;
+import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -31,6 +39,11 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
         this.conversacionesList = conversacionesList;
     }
 
+    public void addConversacion(Conversacion conversacion){
+        conversacionesList.add(conversacion);
+        notifyItemInserted(conversacionesList.size());
+    }
+
     @NonNull
     @Override
     public ConversacionesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,8 +53,9 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
             @Override
             public void onClick(View v) {
                 String str = holder.nickEmisor.getText().toString();
-                Log.w("EVENTO CARD", "card pulsada         "+str);
                 Intent i = new Intent(v.getContext() ,MDActivity.class);
+                i.putExtra(ExtrasRef.ID_EMISOR, holder.idEmisor);
+                i.putExtra(ExtrasRef.ID_DESTINATARIO, holder.idDestinatario);
                 v.getContext().startActivity(i);
             }
         });
@@ -51,7 +65,7 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
 
     @Override
     public void onBindViewHolder(@NonNull ConversacionesViewHolder holder, int position) {
-        holder.nickEmisor.setText(conversacionesList.get(position).getNickEmisor());
+        holder.bindConversacion(conversacionesList.get(position));
     }
 
     @Override
@@ -66,11 +80,43 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
 
         //View que forman la CardView
         private TextView nickEmisor;
+        private ImageView bolita;
+        private String idEmisor;
+        private String idDestinatario;
 
         public ConversacionesViewHolder(View itemView) {
             super(itemView);
             nickEmisor = (TextView) itemView.findViewById(R.id.nick_emisor_TV);
+            bolita = (ImageView) itemView.findViewById(R.id.bolitaNotificacion);
+        }
 
+        public void bindConversacion(Conversacion conversacion){
+            nickEmisor.setText(conversacion.getIdDestinatario());
+            idEmisor = conversacion.getIdEmisor();
+            idDestinatario = conversacion.getIdDestinatario();
+            consultarNick(conversacion.getIdDestinatario());
+            if(conversacion.getTieneMensajes()) {
+                bolita.setVisibility(View.VISIBLE);
+            }else {
+                bolita.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        public void consultarNick(String idUsuer){
+            DatabaseReference reference = FirebaseDatabase.getInstance()
+                    .getReference(FireBaseReferences.JUGADORES);
+            reference.child(idUsuer).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Jugador j = dataSnapshot.getValue(Jugador.class);
+                    nickEmisor.setText(j.getNick());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }//FIN DEL VIEW HOLDER
 }

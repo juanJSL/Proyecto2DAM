@@ -54,14 +54,15 @@ public class Perfil extends Fragment {
         View fragment = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         //Enlazo las View
-        nickTV = (TextView) fragment.findViewById(R.id.wjugador_nick);
-        rolTV = (TextView) fragment.findViewById(R.id.wjugador_rol);
-        equipoTV= (TextView) fragment.findViewById(R.id.wjugador_equipo);
+        nickTV = (TextView) fragment.findViewById(R.id.nick_tv);
+        rolTV = (TextView) fragment.findViewById(R.id.rol_tv);
+        equipoTV= (TextView) fragment.findViewById(R.id.equipo_tv);
 
 
         //Hago la consulta a la BD para rellenar los campos
         consultarUsuario();
 
+/***********************************COMENTADO PARA UNA FUTURA AMPLIACION***************************************
         //Inicializo la lista de ALD
         inicializarLista();
 
@@ -75,7 +76,7 @@ public class Perfil extends Fragment {
 
         //Indico el tipo de layout que va a utilizar la recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+**********************************************************************************************************************/
         return fragment;
     }
 

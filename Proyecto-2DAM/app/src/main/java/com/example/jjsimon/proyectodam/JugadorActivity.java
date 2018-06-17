@@ -43,7 +43,6 @@ public class JugadorActivity extends AppCompatActivity {
         nickTV.setText(getIntent().getExtras().getString(ExtrasRef.NICK_JUGADOR));
         rolTV.setText(getIntent().getExtras().getString(ExtrasRef.ROL_JUGADOR));
         idJugador = getIntent().getExtras().getString(ExtrasRef.ID_JUGADOR);
-        //consultar equipo
         consultarIdEquipo();
 
 

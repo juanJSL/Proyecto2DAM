@@ -10,24 +10,39 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.jjsimon.proyectodam.Clases.Jugador;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CapturasCodigo {
 
-    private void pruebas(Activity activity){
-        Button boton = null;
+    private void aaa(){
 
-        boton.setOnClickListener(new View.OnClickListener() {
+        //Referencia a la base de datos apuntando al nodo jugadores
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("jugadores");
+        //Añado el agente de escucha
+        reference.child("idJugador").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Log.i("EVENTO BOTON", "El boton ha sido pulsado");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Casteo el dataSnapshot que contiene el jugador
+                Jugador j = dataSnapshot.getValue(Jugador.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
 
+
+
+
+
     }
+
+
 }

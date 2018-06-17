@@ -6,18 +6,18 @@ package com.example.jjsimon.proyectodam.Clases;
 
 public class Conversacion {
     private String idConversacion;
-    private String idU1;
-    private String idU2;
-    private String nickEmisor;
+    private String idEmisor;
+    private String idDestinatario;
+    private boolean tieneMensajes;
 
     public Conversacion() {
     }
 
-    public Conversacion(String idConversacion, String idU1, String idU2, String nickEmisor) {
+    public Conversacion(String idConversacion, String idEmisor, String idDestinatario, boolean tieneMensajes) {
         this.idConversacion = idConversacion;
-        this.idU1 = idU1;
-        this.idU2 = idU2;
-        this.nickEmisor = nickEmisor;
+        this.idEmisor = idEmisor;
+        this.idDestinatario = idDestinatario;
+        this.tieneMensajes = tieneMensajes;
     }
 
     public String getIdConversacion() {
@@ -28,27 +28,27 @@ public class Conversacion {
         this.idConversacion = idConversacion;
     }
 
-    public String getIdU1() {
-        return idU1;
+    public String getIdEmisor() {
+        return idEmisor;
     }
 
-    public void setIdU1(String idU1) {
-        this.idU1 = idU1;
+    public void setIdEmisor(String idEmisor) {
+        this.idEmisor = idEmisor;
     }
 
-    public String getIdU2() {
-        return idU2;
+    public String getIdDestinatario() {
+        return idDestinatario;
     }
 
-    public void setIdU2(String idU2) {
-        this.idU2 = idU2;
+    public void setIdDestinatario(String idDestinatario) {
+        this.idDestinatario = idDestinatario;
     }
 
-    public String getNickEmisor() {
-        return nickEmisor;
+    public boolean getTieneMensajes() {
+        return tieneMensajes;
     }
 
-    public void setNickEmisor(String nickEmisor) {
-        this.nickEmisor = nickEmisor;
+    public void setTieneMensajes(boolean tieneMensajes) {
+        this.tieneMensajes = tieneMensajes;
     }
 }

@@ -69,7 +69,6 @@ public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerVie
         private TextView mailJugador;
         private TextView nickJugador;
         private TextView rol;
-        private ImageView fotoJugador;
         private String idJugador;
 
         public JugadoresViewHolder(View itemView) {
@@ -77,7 +76,6 @@ public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerVie
             mailJugador = (TextView) itemView.findViewById(R.id.card_nombre_jugador);
             nickJugador = (TextView) itemView.findViewById(R.id.card_nick_jugador);
             rol = (TextView) itemView.findViewById(R.id.card_rol_jugador);
-            fotoJugador = (ImageView) itemView.findViewById(R.id.card_img_jugador);
 
         }
 
@@ -85,8 +83,6 @@ public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerVie
             mailJugador.setText(jugador.getMail());
             nickJugador.setText(jugador.getNick());
             rol.setText(jugador.getRol());
-            //Investigar de como coger la imagen
-            //fotoJugador.setImageIcon(jugador.getFotoPerfil());
             idJugador = jugador.getIdJugador();
         }
     }

@@ -22,9 +22,7 @@ public class FireBaseReferences {
     //CONVERSACION
     public static String CONVERSACIONES =  "conversaciones";
     public static String ID_CONVERSACION =  "idConversacion";
-    public static String ID_U1 = "idU1";
-    public static String ID_U2 = "idU2";
-    public static String NICK_EMISOR = "nickEmisor";
+    public static String TIENE_MENSAJES = "tieneMensajes";
 
     //MENSAJE
     public static String MENSAJES = "mensajes";

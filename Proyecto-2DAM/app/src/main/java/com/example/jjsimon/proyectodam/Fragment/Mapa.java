@@ -9,9 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jjsimon.proyectodam.ActivityEquipo;
+import com.example.jjsimon.proyectodam.PantallaEquipo;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
 import com.example.jjsimon.proyectodam.R;
@@ -43,8 +41,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.ui.IconGenerator;
-
-import java.util.ArrayList;
 
 
 public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
@@ -114,8 +110,9 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         //Cambio el tipo de marcador
         TextView text = new TextView(getContext());
         text.setText(equipo.getNombre());
-        IconGenerator generator = new IconGenerator(getContext());
 
+        //Creo el nuevo icono para el marcador
+        IconGenerator generator = new IconGenerator(getContext());
         generator.setBackground(getResources().getDrawable(R.drawable.amu_bubble_mask));
         generator.setContentView(text);
         generator.setColor(Color.WHITE);
@@ -201,7 +198,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Equipo equipo = (Equipo) marker.getTag();
-                Intent i = new Intent(getActivity(), ActivityEquipo.class);
+                Intent i = new Intent(getActivity(), PantallaEquipo.class);
                 i.putExtra(ExtrasRef.ID_EQUIPO, equipo.getIdEquipo());
                 i.putExtra(ExtrasRef.NOMBRE_EQUIPO, equipo.getNombre());
                 startActivity(i);
