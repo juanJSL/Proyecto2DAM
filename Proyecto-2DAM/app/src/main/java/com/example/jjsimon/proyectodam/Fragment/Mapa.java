@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.example.jjsimon.proyectodam.PantallaEquipo;
 import com.example.jjsimon.proyectodam.Clases.Equipo;
@@ -123,6 +124,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
         //Creo y añado el marcador
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
+                .position(latLng)
                 .title(equipo.getNombre())
                 .snippet(equipo.getDescripcion())
                 .icon(BitmapDescriptorFactory.fromBitmap(icon));
@@ -166,7 +168,7 @@ public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
                         double latitude = location.getLatitude();
                         double longitud = location.getLongitude();
                         LatLng latLng = new LatLng(latitude, longitud);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15 ));
                     }
                 });
             } else {

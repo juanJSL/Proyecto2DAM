@@ -49,6 +49,7 @@ public class PestanaEquipo extends Fragment {
     private String idEquipo;
     private Jugador jugador;
     private TextView nombreEquipoET;
+    private TextView numJugadores;
     private Button dejarEquipoBT;
     private final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -65,6 +66,7 @@ public class PestanaEquipo extends Fragment {
         //Enlazo las view
         dejarEquipoBT = (Button) fragmentEquipo.findViewById(R.id.dejar_equipo_bt);
         nombreEquipoET = (TextView) fragmentEquipo.findViewById(R.id.wequipo_nombreTV);
+        numJugadores = (TextView) fragmentEquipo.findViewById(R.id.wequipo_numjugadoresTV);
         recyclerView = (RecyclerView) fragmentEquipo.findViewById(R.id.we_equipoRecycler);
         constraintLayout = (ConstraintLayout) fragmentEquipo.findViewById(R.id.fragmentEquipoXML);
         mensajeSinEquipo = (TextView) fragmentEquipo.findViewById(R.id.sin_equipo_tv);
@@ -204,6 +206,7 @@ public class PestanaEquipo extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                numJugadores.setText(dataSnapshot.getChildrenCount()+"");
                 //Vacio la lista de jugadores
                 jugadoresList.removeAll(jugadoresList);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

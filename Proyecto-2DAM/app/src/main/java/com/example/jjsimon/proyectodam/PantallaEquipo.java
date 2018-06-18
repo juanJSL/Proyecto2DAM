@@ -36,6 +36,7 @@ public class PantallaEquipo extends AppCompatActivity {
 
     private Button unirseEquipoBT;
     private TextView nombreEquipoTV;
+    private TextView numJugadores;
 
     private ArrayList<Jugador> jugadorList;
     private RecyclerView recyclerView;
@@ -52,8 +53,10 @@ public class PantallaEquipo extends AppCompatActivity {
 
         //Enlazo las view
         unirseEquipoBT = (Button) findViewById(R.id.unirse_equipo_bt);
+        numJugadores = (TextView) findViewById(R.id.equipo_numJugadoresTitle);
         nombreEquipoTV = (TextView) findViewById(R.id.equipo_nombreTV);
         nombreEquipoTV.setText(getIntent().getExtras().getString(ExtrasRef.NOMBRE_EQUIPO));
+
         idEquipo = getIntent().getExtras().getString(ExtrasRef.ID_EQUIPO);
 
         //Añado el evento onClick para el boton
@@ -113,6 +116,7 @@ public class PantallaEquipo extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener()  {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                numJugadores.append(" "+dataSnapshot.getChildrenCount());
                 jugadorList.removeAll(jugadorList);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Jugador jugador = snapshot.getValue(Jugador.class);

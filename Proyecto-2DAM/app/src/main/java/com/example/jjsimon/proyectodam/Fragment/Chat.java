@@ -70,7 +70,7 @@ public class Chat extends Fragment {
         query.orderByChild(FireBaseReferences.ID_EMISOR).equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+                Log.w("CREAUSER", "ADDEDD");
                 Conversacion c = dataSnapshot.getValue(Conversacion.class);
                 adapter.addConversacion(c);
                 adapter.notifyDataSetChanged();
@@ -78,6 +78,7 @@ public class Chat extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Log.w("CREAUSER", "chang");
                 //conversacionesList.removeAll(conversacionesList);
                 //adapter.notifyDataSetChanged();
                 //recuperarConversaciones();

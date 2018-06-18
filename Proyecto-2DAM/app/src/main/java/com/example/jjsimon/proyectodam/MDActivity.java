@@ -225,7 +225,7 @@ public class MDActivity extends AppCompatActivity {
                         if(idEmisor.equals(emisor)) {
                             emisortTieneConverascion = existeConversacion;
                             conversacionEmisor=c;
-                            actualizarTieneMensajes(c.getIdConversacion(), false);
+                            //actualizarTieneMensajes(c.getIdConversacion(), false);
                         }else if(idDestinatario.equals(emisor)) {
                             destinatarioTieneConverascion = existeConversacion;
                             conversacionDestinatario=c;
@@ -282,18 +282,24 @@ public class MDActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         tieneConversacionQuery.removeEventListener(valueEventListener);
+        if(conversacionEmisor!=null)
+            actualizarTieneMensajes(conversacionEmisor.getIdConversacion(), false);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         tieneConversacionQuery.removeEventListener(valueEventListener);
+        if(conversacionEmisor!=null)
+            actualizarTieneMensajes(conversacionEmisor.getIdConversacion(), false);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         tieneConversacionQuery.removeEventListener(valueEventListener);
+        if(conversacionEmisor!=null)
+            actualizarTieneMensajes(conversacionEmisor.getIdConversacion(), false);
     }
 }
 
