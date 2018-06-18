@@ -42,7 +42,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.ui.IconGenerator;
 
-
+/**
+ * Fragment sobre el que se pintara el mapa y se mostraran los marcadores de cada equipo
+ */
 public class Mapa extends SupportMapFragment implements OnMapReadyCallback {
     private static final int PETICION_PERMISO_LOCALIZACION = 120;
     private GoogleMap mMap;

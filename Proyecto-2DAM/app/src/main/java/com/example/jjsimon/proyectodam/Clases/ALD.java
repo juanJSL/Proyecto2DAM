@@ -1,5 +1,8 @@
 package com.example.jjsimon.proyectodam.Clases;
 
+/**
+ * Objeto que representa una replica se utilizar en una futura ampliacion de la aplicacion
+ */
 public class ALD {
     private int idAld;
     private String modelo;

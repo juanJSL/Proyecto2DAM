@@ -70,11 +70,14 @@ public class PantallaLogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Comprueba que el campo contraseña y el campo email esten completos
-                if(!mailET.getText().toString().equals("") && !pwdET.getText().toString().equals("")) {
-                    //Si los campos se han completado llamo al metodo que se encarga de iniciar sesion
+                if(!mailET.getText().toString().equals("")
+                        && !pwdET.getText().toString().equals("")) {
+                    //Si los campos se han completado llamo al metodo
+                    // que se encarga de iniciar sesion
                     iniciarSesion();
                 } else {
-                    //Si no se han completado muestro un dialogo para indicar que faltan campos
+                    //Si no se han completado muestro un dialogo para
+                    // indicar que faltan campos
                     AlertDialog.Builder builder = new AlertDialog.Builder(PantallaLogin.this);
 
                     builder.setTitle(R.string.faltan_campos_titulo)
@@ -93,7 +96,8 @@ public class PantallaLogin extends AppCompatActivity {
     }//Fin OnCreate
 
     /**
-     *Este metodo abre la pantalla de crear cuenta es llamado cuando se pulsa el texto de crear cuenta
+     *Este metodo abre la pantalla de crear cuenta es llamado
+     *  cuando se pulsa el texto de crear cuenta
      */
     public void abrirCrearCuenta(){
         Intent intent = new Intent(this, PantallaCrearCuenta.class);
@@ -114,7 +118,8 @@ public class PantallaLogin extends AppCompatActivity {
                 //En caso de que se haya podido iniciar sesion se muestra un toast informando al
                 //usuario, se cambia la preferencia y se finaliza la activvidad
                 if (task.isSuccessful()) {
-                    Toast.makeText(PantallaLogin.this, "Sesion iniciada", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PantallaLogin.this, "Sesion iniciada",
+                            Toast.LENGTH_LONG).show();
                     //Creo el editor para las preferencias
                     startActivity(new Intent(PantallaLogin.this, MainActivity.class));
                     finish();

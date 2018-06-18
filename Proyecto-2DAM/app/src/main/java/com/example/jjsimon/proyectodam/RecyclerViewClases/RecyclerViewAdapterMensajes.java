@@ -22,7 +22,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerViewAdapterMensajes.MensajesViewHolder>{
+/**
+ * Ayuda a mostrar los mensajes dentro de una conversacion
+ */
+public class RecyclerViewAdapterMensajes
+        extends RecyclerView.Adapter<RecyclerViewAdapterMensajes.MensajesViewHolder>{
     private ArrayList<Mensaje> mensajesList;
 
     public RecyclerViewAdapterMensajes() {
@@ -42,7 +46,8 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public MensajesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_mensaje, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_mensaje, parent, false);
         MensajesViewHolder holder = new MensajesViewHolder(view);
         return holder;
     }
@@ -52,7 +57,8 @@ public class RecyclerViewAdapterMensajes extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull MensajesViewHolder holder, int position) {
         //
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //Se debe aplicar estilo en ambos casos de lo contrario al hacer scroll coge el stilo de la card que esta reciclando
+        //Se debe aplicar estilo en ambos casos de lo contrario al hacer
+        // scroll coge el stilo de la card que esta reciclando
         if(mensajesList.get(position).getIdEmisor().equals(user.getUid())) {
             //holder.cuerpoMensajeTV.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
             holder.cardView.setBackgroundColor(Color.rgb( 186,247,138));

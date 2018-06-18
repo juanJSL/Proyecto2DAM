@@ -63,7 +63,8 @@ public class PantallaEquipo extends AppCompatActivity {
                 if(jugador.getIdEquipo()==null)
                     unirseEquipo();
                 else
-                    Toast.makeText(getBaseContext(), R.string.ya_tienes_equipo, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), R.string.ya_tienes_equipo,
+                            Toast.LENGTH_LONG).show();
             }
         });
 
@@ -80,14 +81,16 @@ public class PantallaEquipo extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewAdapterJugador);
 
         //Indico el tipo de layout que va a utilizar la recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
 
         consultarJugadores();
     }
 
     private void consultarUsuario() {
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference(FireBaseReferences.JUGADORES);
         reference.child(USER.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -102,7 +105,8 @@ public class PantallaEquipo extends AppCompatActivity {
 
     private void consultarJugadores(){
         //Referencia a la BD en el nodo JUGADORES
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference(FireBaseReferences.JUGADORES);
 
         Query query = reference.orderByChild(FireBaseReferences.ID_EQUIPO).equalTo(idEquipo);
         //Busco dentro de los nodos jugadores los que tengan el id del equipo actual
@@ -138,7 +142,8 @@ public class PantallaEquipo extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Si el usuario hace click en si borro el equipo
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES).child(USER.getUid());
+                                DatabaseReference reference = FirebaseDatabase.getInstance()
+                                        .getReference(FireBaseReferences.JUGADORES).child(USER.getUid());
                                 reference.child(FireBaseReferences.ID_EQUIPO).setValue(idEquipo);
                             }
                         })

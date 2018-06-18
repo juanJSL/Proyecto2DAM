@@ -76,10 +76,13 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == PETICION_PERMISO_LOCALIZACION) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 obtenerUbicacion();
             } else {
-                Toast.makeText(this, "Debes dar permisos para poder seleccionar la ubicacion", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        "Debes dar permisos para poder seleccionar la ubicacion",
+                        Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -91,11 +94,14 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
      */
     private void obtenerUbicacion(){
 
-        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+        FusedLocationProviderClient client;
+        client= LocationServices.getFusedLocationProviderClient(getApplicationContext());
 
         //Compruebo los permisos
-        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //Comprobar que el gps esta activo
             LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -109,20 +115,20 @@ public class PantallaUbicacionEquipo extends FragmentActivity implements OnMapRe
 
                         LatLng latLng = new LatLng(latitude, longitud);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Ubicacion actual").draggable(true));
+                        marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                                .title("Ubicacion actual").draggable(true));
                     }
                 });
             } else {
                 //Si el gps no esta activado muestro un toast
-                Toast.makeText(this, "Debes activar el GPS para recuperar tu ubicacion", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Debes activar el GPS para recuperar tu ubicacion"
+                        , Toast.LENGTH_LONG).show();
             }
         }else{
             //Si no tiene permisos los pido
             Utilidades.pedirPermisosUbicacion(this, PETICION_PERMISO_LOCALIZACION);
         }
     }
-
-
 
     public void crearDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

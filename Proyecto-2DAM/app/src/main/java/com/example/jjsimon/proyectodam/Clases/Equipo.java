@@ -1,5 +1,9 @@
 package com.example.jjsimon.proyectodam.Clases;
 
+/**
+ * Esta clase reprsenta un equipode nuestra aplicacion
+ * permite representarlo en la base de datos o recuperarlo de ella
+ */
 public class Equipo {
     private String idEquipo;
     private String nombre;

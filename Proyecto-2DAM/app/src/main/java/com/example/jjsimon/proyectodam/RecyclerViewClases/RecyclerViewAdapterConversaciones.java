@@ -26,13 +26,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /**
- * Created by diurno on 29/05/18.
+ * Esta clase adaptadora ayuda a mostrar las card view de las conversaciones
+ * que tiene un usuario
  */
 
-public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<RecyclerViewAdapterConversaciones.ConversacionesViewHolder>{
+public class RecyclerViewAdapterConversaciones
+        extends RecyclerView.Adapter
+        <RecyclerViewAdapterConversaciones.ConversacionesViewHolder>{
     private ArrayList<Conversacion> conversacionesList;
 
     public RecyclerViewAdapterConversaciones() {
+        conversacionesList = new ArrayList<>();
     }
 
     public RecyclerViewAdapterConversaciones(ArrayList<Conversacion> conversacionesList) {
@@ -44,10 +48,20 @@ public class RecyclerViewAdapterConversaciones extends RecyclerView.Adapter<Recy
         notifyItemInserted(conversacionesList.size());
     }
 
+    public void addConversacionAtPosition(Conversacion conversacion, int position){
+        conversacionesList.add(position, conversacion);
+        notifyItemInserted(position);
+    }
+
+    public void limpiarLista(){
+        conversacionesList.removeAll(conversacionesList);
+    }
+
     @NonNull
     @Override
     public ConversacionesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_conversacion, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_conversacion, parent, false);
         final ConversacionesViewHolder holder = new ConversacionesViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override

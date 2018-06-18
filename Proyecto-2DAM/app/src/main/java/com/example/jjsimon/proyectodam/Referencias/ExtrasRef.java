@@ -28,4 +28,6 @@ public class ExtrasRef {
     public static String FECHA = "fecha";
     public static String ID_EMISOR = "idEmisor";
     public static String ID_DESTINATARIO = "idDestinatario";
+
+    public static String TAB_INICIAL = "tabInicial";
 }

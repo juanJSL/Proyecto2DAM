@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Esta clase que extiende FragmentPagerAdapter será la que
+ * Esta clase que extiende FragmentPagerAdapter y es la encargada de guardar un
+ * Fragment cuando no se está utilizando deontro de un conjunto de pestañas
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -39,6 +40,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     //Metodo que permite añadir un fragment a la lista
     public void addFragment(Fragment fragment){
         fragmentList.add(fragment);
+    }
+
+    public void clearAdapter(){
+        fragmentList.removeAll(fragmentList);
     }
 
 }

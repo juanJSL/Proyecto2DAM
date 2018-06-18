@@ -1,5 +1,10 @@
 package com.example.jjsimon.proyectodam.FireBase;
 
+/**
+ * Esta clase guarda cadenas para hacer referencia a cada uno de los nodos
+ * existentes dentro de la base de datos Firebase, de esta manera es mas
+ * dificil cometer una errata al escribir el nombre de un nodo.
+ */
 public class FireBaseReferences {
     //EQUIPOS
     public static final String EQUIPOS = "equipos";

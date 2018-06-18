@@ -1,9 +1,8 @@
 package com.example.jjsimon.proyectodam.Clases;
 
 /**
- * Created by diurno on 29/05/18.
+ * Esta clase representa una conversacion en la base de datos
  */
-
 public class Conversacion {
     private String idConversacion;
     private String idEmisor;
@@ -50,5 +49,18 @@ public class Conversacion {
 
     public void setTieneMensajes(boolean tieneMensajes) {
         this.tieneMensajes = tieneMensajes;
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            Conversacion c = (Conversacion) obj;
+            return this.getIdConversacion().equals(c.getIdConversacion());
+        }catch (ClassCastException ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

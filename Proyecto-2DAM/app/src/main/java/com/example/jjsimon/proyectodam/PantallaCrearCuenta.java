@@ -50,7 +50,9 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         listaRoles = (Spinner) findViewById(R.id.spinner_roles);
 
         //Cargo la lista con los roles
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.roles_array,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter;
+        adapter= ArrayAdapter.createFromResource(this,R.array.roles_array,
+                android.R.layout.simple_spinner_item);
         listaRoles.setAdapter(adapter);
 
         //Tambien los de Firebase
@@ -59,7 +61,8 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         btCrearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (comprobarCampos())//Llamo al metodo que se encarga de comprobar los campos, si todos son correctos se inicia el registro
+                if (comprobarCampos())//Llamo al metodo que se encarga de comprobar los campos,
+                    // si todos son correctos se inicia el registro
                     iniciarRegistro();
             }
         });
@@ -73,12 +76,16 @@ public class PantallaCrearCuenta extends AppCompatActivity {
      * @return true -> DATOS VALIDOS       false -> DATOS NO VALIDOS
      */
     public boolean comprobarCampos() {
-        if (nickET.getText().length() > 0 && mailET.getText().length() > 0 && pwdET.getText().length() > 0 && repeatPwdET.getText().length() > 0) {
+        if (nickET.getText().length() > 0
+                && mailET.getText().length() > 0
+                && pwdET.getText().length() > 0
+                && repeatPwdET.getText().length() > 0) {
             if (comprobarCampoMail() && comprobarPwd())
                 return true;
             else return false;
         } else {
-            Toast.makeText(PantallaCrearCuenta.this, R.string.error_faltan_campos, Toast.LENGTH_LONG).show();
+            Toast.makeText(PantallaCrearCuenta.this,
+                    R.string.error_faltan_campos, Toast.LENGTH_LONG).show();
             return false;
         }
     }
@@ -95,7 +102,8 @@ public class PantallaCrearCuenta extends AppCompatActivity {
         String pwdStr1 = pwdET.getText() + "";
         String pwdStr2 = repeatPwdET.getText() + "";
 
-        if (pwdStr1.length() >= 6) {//Compruebo que la contraseña tiene una longitud de al menos 6 caracteres (Es el minimo que pide firebase)
+        if (pwdStr1.length() >= 6) {
+            //Compruebo que la contraseña tiene una longitud de al menos 6 caracteres (Es el minimo que pide firebase)
             //Compruebo si estas 2 cadenas son iguales
             if (pwdStr1.equals(pwdStr2))//Si son iguales devuelvo "true"
                 return true;
@@ -163,19 +171,23 @@ public class PantallaCrearCuenta extends AppCompatActivity {
 
 
     /**
-     * Este metodo se ejecuta cuando un usuario se registra, permite guardar los datos del uusario en la base de datos
+     * Este metodo se ejecuta cuando un usuario se registra, permite guardar los datos
+     * del uusario en la base de datos
      * @param idUser es el id que se genera automaticamente al registrar un usuario
      */
     public void guardarUser(String idUser, String mail){
         String nickStr = nickET.getText() + "";
         //Creo un objeto con los datos introducidos por el usuario
-        Jugador jugador = new Jugador(idUser, mail, nickStr, String.valueOf(listaRoles.getSelectedItem()),"Foto");
+        Jugador jugador = new Jugador(idUser, mail, nickStr,
+                String.valueOf(listaRoles.getSelectedItem()),"Foto");
 
         //Creo una referencia a la base de datos
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Guardo el uusario en la base de datos
-        databaseReference.child(FireBaseReferences.JUGADORES).child(jugador.getIdJugador()).setValue(jugador);
+        databaseReference.child(FireBaseReferences.JUGADORES)
+                .child(jugador.getIdJugador())
+                .setValue(jugador);
     }//FIN GUARDAR USER
 
 

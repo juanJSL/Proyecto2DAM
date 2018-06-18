@@ -1,5 +1,8 @@
 package com.example.jjsimon.proyectodam.Clases;
 
+/**
+ * Representa un mensaje de chat
+ */
 public class Mensaje {
     public static int ENVIO_SOLICITUD = 0;
     public static int MENSAJE = 1;

@@ -61,7 +61,8 @@ public class JugadorActivity extends AppCompatActivity {
     }
 
     private void consultarIdEquipo(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
         reference.child(idJugador).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,7 +79,8 @@ public class JugadorActivity extends AppCompatActivity {
     }
 
     private void consultarEquipo(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
         reference.child(idEquipo).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

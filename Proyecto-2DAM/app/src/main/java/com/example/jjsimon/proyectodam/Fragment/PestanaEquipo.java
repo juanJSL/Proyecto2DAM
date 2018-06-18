@@ -1,41 +1,45 @@
 package com.example.jjsimon.proyectodam.Fragment;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+        import android.app.AlertDialog;
+        import android.content.DialogInterface;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.support.annotation.NonNull;
+        import android.support.annotation.Nullable;
+        import android.support.constraint.ConstraintLayout;
+        import android.support.v4.app.Fragment;
+        import android.support.v7.widget.LinearLayoutManager;
+        import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.Button;
+        import android.widget.TextView;
 
-import com.example.jjsimon.proyectodam.Clases.Equipo;
-import com.example.jjsimon.proyectodam.Clases.Jugador;
-import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
-import com.example.jjsimon.proyectodam.R;
-import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterJugador;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+        import com.example.jjsimon.proyectodam.Clases.Equipo;
+        import com.example.jjsimon.proyectodam.Clases.Jugador;
+        import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
+        import com.example.jjsimon.proyectodam.R;
+        import com.example.jjsimon.proyectodam.RecyclerViewClases.RecyclerViewAdapterJugador;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.Query;
+        import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
-import static android.app.Activity.RESULT_OK;
+        import static android.app.Activity.RESULT_OK;
 
+/**
+ * Muestra la informacion del equipo al que pertenece el jugador
+ * si no lo tiene muestra un mensaje de informacion
+ */
 public class PestanaEquipo extends Fragment {
 
     private ConstraintLayout constraintLayout;
@@ -86,7 +90,8 @@ public class PestanaEquipo extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapterJugador);
 
         //Indico el tipo de layout que va a utilizar la recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
 
         //Realizo las consultas necesarias a la BD para completar la informacion
         consultarJugador();
@@ -108,15 +113,20 @@ public class PestanaEquipo extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Si el usuario hace click en si borro el equipo
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES).child(USER.getUid());
-                                reference.child(FireBaseReferences.ID_EQUIPO).setValue(null);
+                                DatabaseReference reference;
+                                reference = FirebaseDatabase
+                                        .getInstance()
+                                        .getReference(FireBaseReferences.JUGADORES)
+                                        .child(USER.getUid());
+                                reference
+                                        .child(FireBaseReferences.ID_EQUIPO)
+                                        .setValue(null);
                             }
                         })
                 .setNegativeButton(R.string.cancelar,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Log.w("DIALOGO", "CANCELAR");
                             }
                         });
         builder.create().show();
@@ -127,7 +137,10 @@ public class PestanaEquipo extends Fragment {
      * Consulto los datos del usuario actual para obtener el id de su equipo
      */
     public void consultarJugador() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference(FireBaseReferences.JUGADORES);
 
         databaseReference.child(USER.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -154,11 +167,13 @@ public class PestanaEquipo extends Fragment {
 
 
     /**
-     * Este metodo hace una consulta a la base de datos y obtiene los datos del equipo al que pertenece el usuario
+     * Este metodo hace una consulta a la base de datos y obtiene
+     * los datos del equipo al que pertenece el usuario
      */
     public void cargarDatosEquipo() {
         //Referencia a la BD apuntando al nodo EQUIPOS
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.EQUIPOS);
 
         //Busco el nodo con el id del equipo del usuario
         reference.child(idEquipo).addValueEventListener(new ValueEventListener() {
@@ -181,7 +196,8 @@ public class PestanaEquipo extends Fragment {
      */
     private void cargarJugadores() {
         //Referencia a la BD en el nodo JUGADORES
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
 
         Query query = reference.orderByChild(FireBaseReferences.ID_EQUIPO).equalTo(idEquipo);
         //Busco dentro de los nodos jugadores los que tengan el id del equipo actual

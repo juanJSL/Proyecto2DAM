@@ -4,25 +4,24 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.jjsimon.proyectodam.Clases.Mensaje;
 import com.example.jjsimon.proyectodam.FireBase.FireBaseReferences;
-import com.example.jjsimon.proyectodam.Fragment.Chat;
 import com.example.jjsimon.proyectodam.MainActivity;
 import com.example.jjsimon.proyectodam.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Este servicio se encarga de crear notificaciones cuando el usuario ha recibido
+ * un mensaje y no se encuentra en la aplicacion
+ */
 public class ServicioNotificaciones extends Service {
     private FirebaseDatabase database;
     private DatabaseReference reference;
@@ -62,8 +61,6 @@ public class ServicioNotificaciones extends Service {
                 String idUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 Mensaje mensaje = dataSnapshot.getValue(Mensaje.class);
                 if(mensaje.getIdDestinatario().equals(idUser)) {
-                    Log.w("SERVICIO", "Tienes un nuevo mensaje");
-                    Log.w("SERVICIO", mensaje.getCuerpoMensaje());
                     crearNotificacion();
                 }
             }
@@ -96,17 +93,16 @@ public class ServicioNotificaciones extends Service {
 
         Intent i = new Intent(getBaseContext(), MainActivity.class);
 
-        PendingIntent contIntent = PendingIntent.getActivity(getBaseContext(), 0, i, 0);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, i, 0);
 
 
         Notification.Builder builder = new Notification.Builder(getBaseContext())
                 .setSmallIcon(R.drawable.ic_dialog_close_dark)
-                .setContentTitle("Mensaje nuevo")
+                .setContentTitle("Nuevo mensaje")
                 .setContentText("Tienes un mensaje nuevo")
                 .setVibrate(vibrate)
                 .setWhen(System.currentTimeMillis())
-                .setContentIntent(contIntent)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         //Mando la notificacion

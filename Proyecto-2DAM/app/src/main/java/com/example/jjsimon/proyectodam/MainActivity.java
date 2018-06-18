@@ -3,6 +3,7 @@ package com.example.jjsimon.proyectodam;
 
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,7 @@ import com.example.jjsimon.proyectodam.Fragment.Chat;
 import com.example.jjsimon.proyectodam.Fragment.PestanaEquipo;
 import com.example.jjsimon.proyectodam.Fragment.Mapa;
 import com.example.jjsimon.proyectodam.Fragment.Perfil;
+import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
     private  ViewPagerAdapter adapter;
-
     private Intent servicio;
+
+    private int tabInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +105,18 @@ public class MainActivity extends AppCompatActivity {
     private void abrirCreaarEquipo() {
         //Compruebo si el usuario ya tiene un equipo
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
-        reference.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference(FireBaseReferences.JUGADORES);
+        reference.child(user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Jugador jugador = dataSnapshot.getValue(Jugador.class);
                 if(jugador.getIdEquipo()!=null){
-                    //Si el jugador ya tiene un equipo muestro un toast indicandole que no puede crear otro
-                    Toast.makeText(getBaseContext(), R.string.ya_tienes_equipo, Toast.LENGTH_LONG).show();
+                    //Si el jugador ya tiene un equipo muestro
+                    // un toast indicandole que no puede crear otro
+                    Toast.makeText(getBaseContext(),
+                            R.string.ya_tienes_equipo, Toast.LENGTH_LONG).show();
                 }else{
                     startActivity(new Intent(getBaseContext(), CrearEquipo.class));
                 }
@@ -122,19 +128,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.w("SERVICIO", "main onDestroy");
-        stopService(servicio);
-    }
-
-
-    /**
-     * Se supone que con esto puedo actualizar el fragment de la pestaña equipo
-     */
-    public void actualizar(){
-        viewPager.getAdapter().notifyDataSetChanged();
-    }
+    
 }

@@ -16,7 +16,8 @@ import com.example.jjsimon.proyectodam.Referencias.ExtrasRef;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerViewAdapterJugador.JugadoresViewHolder> {
+public class RecyclerViewAdapterJugador
+        extends RecyclerView.Adapter<RecyclerViewAdapterJugador.JugadoresViewHolder> {
     private ArrayList<Jugador> jugadorList;
 
 
@@ -32,7 +33,8 @@ public class RecyclerViewAdapterJugador extends RecyclerView.Adapter<RecyclerVie
     @NonNull
     @Override
     public JugadoresViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_miembro,parent,false);
+        View item = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_miembro,parent,false);
         final JugadoresViewHolder holder = new JugadoresViewHolder(item);
         item.setOnClickListener(new View.OnClickListener() {
             @Override
